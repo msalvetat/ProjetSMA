@@ -1,25 +1,30 @@
 package m2dl.jlm.projetsma.agent
 
-import static org.junit.Assert.*
+import java.util.concurrent.Executors
 
-import org.junit.Test
+import m2dl.jlm.projetsma.agent.knowledge.Knowledge
+import m2dl.jlm.projetsma.environment.Room
+import spock.lang.Specification
+import fr.irit.smac.libs.tooling.scheduling.contrib.twosteps.ITwoStepsAgent
+import fr.irit.smac.libs.tooling.scheduling.contrib.twosteps.TwoStepsSystemStrategy
 
-class TeacherAgentTest {
+class TeacherAgentTest extends Specification {
 
-	def 'check the step perceive'() {
+	def 'check the step perceive for a teacher agent'() {
 
 		given:
-		//Cours cours = new Cours("pcr");
-		//TeacherAgent agent = new TeacherAgent("sheogorath",cours);
-		//SMA sma = new SMA();
-		//Ajouter l'agent dans le sma
+		TwoStepsSystemStrategy systemStrategy = new TwoStepsSystemStrategy(new HashSet<ITwoStepsAgent>(),Executors.newFixedThreadPool(8));
+		TeacherAgent teacher = new TeacherAgent("sheogorath");
+		systemStrategy.addAgent(teacher);
 
 		when:
-		//Execution du sma et donc de l'agent
+		systemStrategy.doStep();
 
 		then:
-		//Le knowledge de l'agent est bien à jour
-		assert false
+		TeacherAgent teacherSMA = systemStrategy.getAgents().first()
+		Knowledge knowledge = teacherSMA.getKnowledge()
+		knowledge.getRooms().size() == 3
+		knowledge.getAllocationsTeacherRoom().size() == 0
 	}
 	
 }
