@@ -43,13 +43,21 @@ public class TeacherAgent implements ITwoStepsAgent {
 			room = iterator.next();
 			
 			// Decide : we decide the room we can take
-			if (!allocationsTeacherRoom.containsKey(room)) {
+			if (roomIsFree(room, allocationsTeacherRoom) && teacherHasNotRoomAlreadyBooked(allocationsTeacherRoom)) {
 				
 				// Act : booking the room
 				allocationsTeacherRoom.put(room, this);
 				hasDecided = true;
 			}
 		}
+	}
+
+	private boolean roomIsFree(Room room, HashMap<Room, TeacherAgent> allocationsTeacherRoom) {
+		return !allocationsTeacherRoom.containsKey(room);
+	}
+
+	private boolean teacherHasNotRoomAlreadyBooked(HashMap<Room, TeacherAgent> allocationsTeacherRoom) {
+		return !allocationsTeacherRoom.containsValue(this);
 	}
 
 	public String getId() {
