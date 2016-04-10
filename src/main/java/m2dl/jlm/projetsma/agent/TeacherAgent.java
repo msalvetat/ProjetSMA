@@ -52,4 +52,8 @@ public class TeacherAgent implements ITwoStepsAgent {
 		}
 	}
 
+	public String getId() {
+		return id;
+	}
+	
 }

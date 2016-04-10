@@ -45,8 +45,8 @@ class TeacherAgentTest extends Specification {
 		then:
 		TeacherAgent teacherSMA = systemStrategy.getAgents().first()
 		Knowledge knowledge = teacherSMA.getKnowledge()
-		knowledge.getAllocationsTeacherRoom().size() == 2
-		knowledge.getAllocationsTeacherRoom().get(room1) == teacher
+		knowledge.getAllocationsTeacherRoom().size() == 1
+		knowledge.getAllocationsTeacherRoom().get(room1).getId().equals(teacher.getId())
 	}
 	
 }
