@@ -5,11 +5,13 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import m2dl.jlm.projetsma.agent.EtudiantAgent;
 import m2dl.jlm.projetsma.agent.TeacherAgent;
 
 public class Environment {
 
 	Set<Room> rooms;
+	Set<EtudiantAgent> etudiants;
 	Map<Room, TeacherAgent> allocationsTeacherRoom;
 
 	private Environment() {
@@ -17,6 +19,9 @@ public class Environment {
 		this.rooms.add(new Room("A1"));
 		this.rooms.add(new Room("A2"));
 		this.rooms.add(new Room("A3"));
+		this.etudiants.add(new EtudiantAgent("etudiant1"));
+		this.etudiants.add(new EtudiantAgent("etudiant2"));
+		this.etudiants.add(new EtudiantAgent("etudiant3"));
 		this.allocationsTeacherRoom = new HashMap<Room,TeacherAgent>();
 	};
 
@@ -44,6 +49,14 @@ public class Environment {
 
 	public void setAllocationsTeacherRoom(Map<Room, TeacherAgent> allocationsTeacherRoom) {
 		this.allocationsTeacherRoom = allocationsTeacherRoom;
+	}
+
+	public Set<EtudiantAgent> getEtudiants() {
+		return etudiants;
+	}
+
+	public void setEtudiants(Set<EtudiantAgent> etudiants) {
+		this.etudiants = etudiants;
 	}
 
 }

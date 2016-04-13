@@ -5,6 +5,7 @@ import java.util.Set;
 
 import m2dl.jlm.projetsma.agent.TeacherAgent;
 import m2dl.jlm.projetsma.environment.Room;
+import main.java.m2dl.jlm.projetsma.environment.EtudiantAgent;
 
 public class Knowledge {
 
@@ -27,5 +28,14 @@ public class Knowledge {
 		return id;
 	}
 	public Set<Room> rooms;
+	
+	public Set<EtudiantAgent> etudiants;
+
+	public Set<EtudiantAgent> getEtudiants() {
+		return etudiants;
+	}
+	public void setEtudiants(Set<EtudiantAgent> etudiants) {
+		this.etudiants = etudiants;
+	}
 
 }
