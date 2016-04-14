@@ -1,0 +1,10 @@
+namespace sma {
+
+	ecosystem EcoAgents {
+		
+		species Professeur (id: String) {
+
+		
+		}
+	}
+}

@@ -11,6 +11,7 @@
 		<spock-core-version>1.0-groovy-2.4</spock-core-version>
 		<cglib-nodep-version>3.2.1</cglib-nodep-version>
 		<objenesis-version>2.2</objenesis-version>
+		<may-lib-version>3.4.0</may-lib-version>
 	</properties>
 
 	<repositories>
@@ -22,9 +23,18 @@
 				<updatePolicy>always</updatePolicy>
 			</snapshots>
 		</repository>
+        <repository>
+            <id>fr.irit.smac</id>
+            <url>http://www.irit.fr/~Victor.Noel/maven-repos/</url>
+        </repository>
 	</repositories>
 
 	<dependencies>
+		<dependency>
+            <groupId>fr.irit.smac.lib.may</groupId>
+            <artifactId>common-components</artifactId>
+            <version>${may-lib-version}</version>
+        </dependency>
 		<dependency>
 			<groupId>fr.irit.smac</groupId>
 			<artifactId>agent-scheduling</artifactId>
@@ -68,6 +78,14 @@
 
 	<build>
 		<sourceDirectory>src</sourceDirectory>
+		<resources>
+			<resource>
+				<directory>src</directory>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -145,6 +163,44 @@
 							</pluginExecutions>
 						</lifecycleMappingMetadata>
 					</configuration>
+				</plugin>
+				<!-- This configure maven to take into account the SpeADL code in the 
+					speadl-gen directory -->
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>1.8</version>
+					<executions>
+						<execution>
+							<id>add-source</id>
+							<goals>
+								<goal>add-source</goal>
+							</goals>
+							<configuration>
+								<sources>
+									<source>speadl-gen</source>
+								</sources>
+							</configuration>
+						</execution>
+						<!-- The following is only needed so that speadl files are included 
+							in the generated maven artifact -->
+						<execution>
+							<id>add-resource</id>
+							<goals>
+								<goal>add-resource</goal>
+							</goals>
+							<configuration>
+								<resources>
+									<resource>
+										<directory>${project.build.sourceDirectory}</directory>
+										<includes>
+											<include>**/*.speadl</include>
+										</includes>
+									</resource>
+								</resources>
+							</configuration>
+						</execution>
+					</executions>
 				</plugin>
 			</plugins>
 		</pluginManagement>

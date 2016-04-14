@@ -1,12 +1,11 @@
 package m2dl.jlm.projetsma.agent
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.concurrent.Executors
 
 import m2dl.jlm.projetsma.agent.knowledge.Knowledge
-import m2dl.jlm.projetsma.environment.Environment;
+import m2dl.jlm.projetsma.environment.Environment
 import m2dl.jlm.projetsma.environment.Room
+import spock.lang.Ignore
 import spock.lang.Specification
 import fr.irit.smac.libs.tooling.scheduling.contrib.twosteps.ITwoStepsAgent
 import fr.irit.smac.libs.tooling.scheduling.contrib.twosteps.TwoStepsSystemStrategy
