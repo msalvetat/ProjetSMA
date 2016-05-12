@@ -2,9 +2,10 @@ package m2dl.jlm.projetsma.agent
 
 import java.util.concurrent.Executors
 
+import m2dl.jlm.projetsma.agent.impl.TeacherAgent;
 import m2dl.jlm.projetsma.agent.knowledge.Knowledge
-import m2dl.jlm.projetsma.environment.Environment
-import m2dl.jlm.projetsma.environment.Room
+import m2dl.jlm.projetsma.environment.impl.Environment;
+import m2dl.jlm.projetsma.environment.impl.Room;
 import spock.lang.Ignore
 import spock.lang.Specification
 import fr.irit.smac.libs.tooling.scheduling.contrib.twosteps.ITwoStepsAgent

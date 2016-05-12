@@ -3,9 +3,9 @@ package m2dl.jlm.projetsma.agent.knowledge;
 import java.util.HashMap;
 import java.util.Set;
 
-import m2dl.jlm.projetsma.agent.EtudiantAgent;
-import m2dl.jlm.projetsma.agent.TeacherAgent;
-import m2dl.jlm.projetsma.environment.Room;
+import m2dl.jlm.projetsma.agent.impl.EtudiantAgent;
+import m2dl.jlm.projetsma.agent.impl.TeacherAgent;
+import m2dl.jlm.projetsma.environment.impl.Room;
 
 public class Knowledge {
 

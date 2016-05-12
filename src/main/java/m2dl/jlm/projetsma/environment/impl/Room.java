@@ -1,4 +1,4 @@
-package m2dl.jlm.projetsma.environment;
+package m2dl.jlm.projetsma.environment.impl;
 
 public class Room {
 

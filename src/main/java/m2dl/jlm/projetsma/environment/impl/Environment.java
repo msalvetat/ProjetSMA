@@ -1,12 +1,12 @@
-package m2dl.jlm.projetsma.environment;
+package m2dl.jlm.projetsma.environment.impl;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import m2dl.jlm.projetsma.agent.EtudiantAgent;
-import m2dl.jlm.projetsma.agent.TeacherAgent;
+import m2dl.jlm.projetsma.agent.impl.EtudiantAgent;
+import m2dl.jlm.projetsma.agent.impl.TeacherAgent;
 
 public class Environment {
 
@@ -19,6 +19,7 @@ public class Environment {
 		this.rooms.add(new Room("A1"));
 		this.rooms.add(new Room("A2"));
 		this.rooms.add(new Room("A3"));
+		this.etudiants = new HashSet<EtudiantAgent>();
 		this.etudiants.add(new EtudiantAgent("etudiant1"));
 		this.etudiants.add(new EtudiantAgent("etudiant2"));
 		this.etudiants.add(new EtudiantAgent("etudiant3"));

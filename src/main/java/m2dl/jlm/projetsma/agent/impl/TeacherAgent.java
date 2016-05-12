@@ -1,4 +1,4 @@
-package m2dl.jlm.projetsma.agent;
+package m2dl.jlm.projetsma.agent.impl;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,8 +9,9 @@ import fr.irit.smac.libs.tooling.messaging.AgentMessaging;
 import fr.irit.smac.libs.tooling.messaging.IMsgBox;
 import fr.irit.smac.libs.tooling.scheduling.contrib.twosteps.ITwoStepsAgent;
 import m2dl.jlm.projetsma.agent.knowledge.Knowledge;
-import m2dl.jlm.projetsma.environment.Environment;
-import m2dl.jlm.projetsma.environment.Room;
+import m2dl.jlm.projetsma.environment.impl.Environment;
+import m2dl.jlm.projetsma.environment.impl.Room;
+import sma.EcoAgents.Teacher;
 
 public class TeacherAgent implements ITwoStepsAgent {
 
@@ -39,25 +40,25 @@ public class TeacherAgent implements ITwoStepsAgent {
 	}
 
 	public void decideAndAct() {
-		boolean hasDecided = false;
-		Set<Room> rooms = this.knowledge.getRooms();
-		Iterator<Room> iterator = rooms.iterator();
-		Room room;
-		HashMap<Room, TeacherAgent> allocationsTeacherRoom = this.knowledge.getAllocationsTeacherRoom();
-		while(iterator.hasNext() && !hasDecided) {
-			room = iterator.next();
-			
-			// Decide : we decide the room we can take
-			if (roomIsFree(room, allocationsTeacherRoom) && teacherHasNotRoomAlreadyBooked(allocationsTeacherRoom)) {
-				
-				// Act : booking the room
-				allocationsTeacherRoom.put(room, this);
-				hasDecided = true;
-				for(EtudiantAgent etudiant : this.knowledge.getEtudiants()) {
-					this.msgBox.send("Class in room " + room.getName(),etudiant.getId());
-				}
-			}
-		}
+//		boolean hasDecided = false;
+//		Set<Room> rooms = this.knowledge.getRooms();
+//		Iterator<Room> iterator = rooms.iterator();
+//		Room room;
+//		HashMap<Room, TeacherAgent> allocationsTeacherRoom = this.knowledge.getAllocationsTeacherRoom();
+//		while(iterator.hasNext() && !hasDecided) {
+//			room = iterator.next();
+//			
+//			// Decide : we decide the room we can take
+//			if (roomIsFree(room, allocationsTeacherRoom) && teacherHasNotRoomAlreadyBooked(allocationsTeacherRoom)) {
+//				
+//				// Act : booking the room
+//				allocationsTeacherRoom.put(room, this);
+//				hasDecided = true;
+//				for(EtudiantAgent etudiant : this.knowledge.getEtudiants()) {
+//					this.msgBox.send("Class in room " + room.getName(),etudiant.getId());
+//				}
+//			}
+//		}
 	}
 
 	private boolean roomIsFree(Room room, HashMap<Room, TeacherAgent> allocationsTeacherRoom) {

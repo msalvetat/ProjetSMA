@@ -1,10 +1,31 @@
+import m2dl.jlm.projetsma.agent.ICreateAgent
+import m2dl.jlm.projetsma.agent.IGetTeacherAgent
+import m2dl.jlm.projetsma.services.ISchedulingService
+
 namespace sma {
 
-	ecosystem EcoAgents {
-		
-		species Professeur (id: String) {
-
-		
+	component SMA {
+				
+		provides systemStragy: ISchedulingService = services.systemStrategy
+		part agents: EcoAgents {
+			
+		}
+		part services: Services {
 		}
 	}
+	
+	ecosystem EcoAgents {
+				
+		provides create: ICreateAgent
+				
+		species Teacher (id: String) {
+			provides agent: IGetTeacherAgent
+		}
+	}
+	
+	component Services {
+		
+		provides systemStrategy: ISchedulingService
+	}
+
 }
