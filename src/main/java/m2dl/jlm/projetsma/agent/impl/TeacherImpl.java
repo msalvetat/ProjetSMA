@@ -3,6 +3,7 @@ package m2dl.jlm.projetsma.agent.impl;
 import m2dl.jlm.projetsma.agent.IGetTeacherAgent;
 import sma.EcoAgents.Teacher;
 
+//TODO : AgentImpl instead ?
 public class TeacherImpl extends Teacher{
 
     private TeacherAgent teacher;

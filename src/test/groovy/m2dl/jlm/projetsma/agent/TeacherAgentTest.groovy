@@ -4,7 +4,7 @@ import java.util.concurrent.Executors
 
 import m2dl.jlm.projetsma.agent.impl.TeacherAgent;
 import m2dl.jlm.projetsma.agent.knowledge.Knowledge
-import m2dl.jlm.projetsma.environment.impl.Environment;
+import m2dl.jlm.projetsma.environment.impl.EnvironmentImpl;
 import m2dl.jlm.projetsma.environment.impl.Room;
 import spock.lang.Ignore
 import spock.lang.Specification
@@ -36,14 +36,14 @@ class TeacherAgentTest extends Specification {
 		given: "3 rooms and 3 teachers"
 
         // Reset instance
-        Environment.getInstance().setAllocationsTeacherRoom(new HashMap<Room,TeacherAgent>())
+        EnvironmentImpl.getInstance().setAllocationsTeacherRoom(new HashMap<Room,TeacherAgent>())
 
 		TwoStepsSystemStrategy systemStrategy = new TwoStepsSystemStrategy(new HashSet<ITwoStepsAgent>(),Executors.newFixedThreadPool(8));
 		TeacherAgent teacher1 = new TeacherAgent("sheogorath");
 		TeacherAgent teacher2 = new TeacherAgent("azura");
 		TeacherAgent teacher3 = new TeacherAgent("mehrunes dagon");
 
-		def iterator = Environment.getInstance().getRooms().iterator()
+		def iterator = EnvironmentImpl.getInstance().getRooms().iterator()
 
 		systemStrategy.addAgent(teacher1);
 		systemStrategy.addAgent(teacher2);

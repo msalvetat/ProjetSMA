@@ -9,7 +9,7 @@ import fr.irit.smac.libs.tooling.messaging.AgentMessaging;
 import fr.irit.smac.libs.tooling.messaging.IMsgBox;
 import fr.irit.smac.libs.tooling.scheduling.contrib.twosteps.ITwoStepsAgent;
 import m2dl.jlm.projetsma.agent.knowledge.Knowledge;
-import m2dl.jlm.projetsma.environment.impl.Environment;
+import m2dl.jlm.projetsma.environment.impl.EnvironmentImpl;
 import m2dl.jlm.projetsma.environment.impl.Room;
 
 public class EtudiantAgent implements ITwoStepsAgent {

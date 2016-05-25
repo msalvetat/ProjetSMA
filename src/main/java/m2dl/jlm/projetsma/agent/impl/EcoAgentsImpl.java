@@ -4,7 +4,7 @@ import m2dl.jlm.projetsma.agent.ICreateAgent;
 import sma.EcoAgents;
 
 public class EcoAgentsImpl extends EcoAgents{
-
+    
 	public EcoAgentsImpl() {
 	}
 	

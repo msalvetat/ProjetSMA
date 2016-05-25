@@ -1,5 +1,6 @@
 import m2dl.jlm.projetsma.agent.ICreateAgent
 import m2dl.jlm.projetsma.agent.IGetTeacherAgent
+import m2dl.jlm.projetsma.environment.IEnvironment
 import m2dl.jlm.projetsma.services.ISchedulingService
 
 namespace sma {
@@ -7,11 +8,23 @@ namespace sma {
 	component SMA {
 				
 		provides systemStragy: ISchedulingService = services.systemStrategy
+		provides environmentService: IEnvironment = environment.environment
+		provides createAgent: ICreateAgent = agents.create
+		part environment: Environment {
+			
+		}
+		
 		part agents: EcoAgents {
 			
 		}
 		part services: Services {
 		}
+
+	}
+	
+	component Environment { 
+		
+		provides environment: IEnvironment
 	}
 	
 	ecosystem EcoAgents {
