@@ -7,35 +7,30 @@ import fr.irit.smac.libs.tooling.messaging.AgentMessaging;
 import fr.irit.smac.libs.tooling.messaging.IMsgBox;
 import fr.irit.smac.libs.tooling.scheduling.contrib.twosteps.ITwoStepsAgent;
 import m2dl.jlm.projetsma.agent.knowledge.Knowledge;
-import m2dl.jlm.projetsma.environment.impl.EnvironmentImpl;
+import m2dl.jlm.projetsma.environment.IEnvironment;
 import m2dl.jlm.projetsma.environment.impl.Room;
-import sma.Environment;
-import sma.SMA;
-import sma.Environment.Component;
 
 public class TeacherAgent implements ITwoStepsAgent {
 
 	Knowledge knowledge;
 	String id;
 	IMsgBox msgBox;
-	SMA.Component sma;
+	IEnvironment environment;
 
-	public TeacherAgent(String id) {
+	public TeacherAgent(String id, IEnvironment environment) {
 		this.id = id;
+		this.environment = environment;
 		this.knowledge = new Knowledge();
 		this.msgBox = AgentMessaging.getMsgBox(this.id, String.class);
-//	    this.environment = ecoAgent.environment;		
 	}
 
 	public void perceive() {
 
-//	    Environment.Component e = environment.newComponent();
-//		HashSet<Room> rooms = (HashSet<Room>) environment.getRooms();
-//		HashMap<Room, TeacherAgent> allocationsTeacherRoom = (HashMap<Room, TeacherAgent>) EnvironmentImpl.getInstance()
-//				.getAllocationsTeacherRoom();
-//		knowledge.setRooms(rooms);
-//		knowledge.setAllocationsTeacherRoom(allocationsTeacherRoom);
-//		knowledge.setEtudiants((HashSet<EtudiantAgent>)environment.getInstance().getEtudiants());
+		HashSet<Room> rooms = (HashSet<Room>) environment.getRooms();
+		HashMap<Room, TeacherAgent> allocationsTeacherRoom = (HashMap<Room, TeacherAgent>) environment.getAllocationsTeacherRoom();
+		knowledge.setRooms(rooms);
+		knowledge.setAllocationsTeacherRoom(allocationsTeacherRoom);
+		knowledge.setEtudiants((HashSet<EtudiantAgent>)environment.getEtudiants());
 	}
 
 	public Knowledge getKnowledge() {

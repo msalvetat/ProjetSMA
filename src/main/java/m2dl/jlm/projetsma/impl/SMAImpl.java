@@ -10,6 +10,7 @@ import sma.Services;
 
 public class SMAImpl extends SMA{
     
+    
     @Override
     protected EcoAgents make_agents() {
         return new EcoAgentsImpl();
@@ -22,8 +23,9 @@ public class SMAImpl extends SMA{
 
     @Override
     protected Environment make_environment() {
-        EnvironmentImpl environment = new EnvironmentImpl();
-        return environment;
+        return new EnvironmentImpl();
     }
+
+
 
 }

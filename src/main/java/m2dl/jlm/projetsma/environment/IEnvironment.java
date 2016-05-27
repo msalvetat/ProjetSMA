@@ -22,4 +22,5 @@ public interface IEnvironment {
     public Set<EtudiantAgent> getEtudiants();
     
     public void setEtudiants(Set<EtudiantAgent> etudiants);
+
 }

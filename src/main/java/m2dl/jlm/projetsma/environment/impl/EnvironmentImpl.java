@@ -55,6 +55,7 @@ public class EnvironmentImpl extends sma.Environment{
             public void setEtudiants(Set<EtudiantAgent> etudiants) {
                 this.etudiants = etudiants;
             }
+
         };
     }
 

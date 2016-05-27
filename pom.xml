@@ -12,6 +12,7 @@
 		<cglib-nodep-version>3.2.1</cglib-nodep-version>
 		<objenesis-version>2.2</objenesis-version>
 		<may-lib-version>3.4.0</may-lib-version>
+		<maven-compiler-plugin-version>3.1</maven-compiler-plugin-version>
 	</properties>
 
 	<repositories>
@@ -23,18 +24,18 @@
 				<updatePolicy>always</updatePolicy>
 			</snapshots>
 		</repository>
-        <repository>
-            <id>fr.irit.smac</id>
-            <url>http://www.irit.fr/~Victor.Noel/maven-repos/</url>
-        </repository>
+		<repository>
+			<id>fr.irit.smac</id>
+			<url>http://www.irit.fr/~Victor.Noel/maven-repos/</url>
+		</repository>
 	</repositories>
 
 	<dependencies>
 		<dependency>
-            <groupId>fr.irit.smac.lib.may</groupId>
-            <artifactId>common-components</artifactId>
-            <version>${may-lib-version}</version>
-        </dependency>
+			<groupId>fr.irit.smac.lib.may</groupId>
+			<artifactId>common-components</artifactId>
+			<version>${may-lib-version}</version>
+		</dependency>
 		<dependency>
 			<groupId>fr.irit.smac</groupId>
 			<artifactId>agent-scheduling</artifactId>
@@ -89,122 +90,51 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.3</version>
+				<version>${maven-compiler-plugin-version}</version>
 				<configuration>
-					<source />
-					<target />
+					<source>1.7</source>
+					<target>1.7</target>
 				</configuration>
 			</plugin>
-			<!-- Mandatory plugins for using Spock -->
+			
+			<!-- This configure maven to take into account the SpeADL code in the 
+				speadl-gen directory -->
 			<plugin>
-				<!-- The gmavenplus plugin is used to compile Groovy code. To learn more 
-					about this plugin, visit https://github.com/groovy/GMavenPlus/wiki -->
-				<groupId>org.codehaus.gmavenplus</groupId>
-				<artifactId>gmavenplus-plugin</artifactId>
-				<version>${gmavenplus-plugin-version}</version>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.8</version>
 				<executions>
 					<execution>
+						<id>add-source</id>
 						<goals>
-							<goal>testCompile</goal>
+							<goal>add-source</goal>
 						</goals>
+						<configuration>
+							<sources>
+								<source>speadl-gen</source>
+							</sources>
+						</configuration>
+					</execution>
+					<!-- The following is only needed so that speadl files are included 
+						in the generated maven artifact -->
+					<execution>
+						<id>add-resource</id>
+						<goals>
+							<goal>add-resource</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>${project.build.sourceDirectory}</directory>
+									<includes>
+										<include>**/*.speadl</include>
+									</includes>
+								</resource>
+							</resources>
+						</configuration>
 					</execution>
 				</executions>
-				<configuration>
-					<testSources>
-						<testSource>
-							<directory>${project.basedir}/src/test/groovy</directory>
-							<includes>
-								<include>**/*.groovy</include>
-							</includes>
-						</testSource>
-					</testSources>
-				</configuration>
 			</plugin>
 		</plugins>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>${maven-compiler-plugin-version}</version>
-					<configuration>
-						<source>${java-version}</source>
-						<target>${java-version}</target>
-					</configuration>
-				</plugin>
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
-					only. It has no influence on the Maven build itself. -->
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>
-											org.codehaus.gmavenplus
-										</groupId>
-										<artifactId>
-											gmavenplus-plugin
-										</artifactId>
-										<versionRange>
-											[1.5,)
-										</versionRange>
-										<goals>
-											<goal>testCompile</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore></ignore>
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-				<!-- This configure maven to take into account the SpeADL code in the 
-					speadl-gen directory -->
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>build-helper-maven-plugin</artifactId>
-					<version>1.8</version>
-					<executions>
-						<execution>
-							<id>add-source</id>
-							<goals>
-								<goal>add-source</goal>
-							</goals>
-							<configuration>
-								<sources>
-									<source>speadl-gen</source>
-								</sources>
-							</configuration>
-						</execution>
-						<!-- The following is only needed so that speadl files are included 
-							in the generated maven artifact -->
-						<execution>
-							<id>add-resource</id>
-							<goals>
-								<goal>add-resource</goal>
-							</goals>
-							<configuration>
-								<resources>
-									<resource>
-										<directory>${project.build.sourceDirectory}</directory>
-										<includes>
-											<include>**/*.speadl</include>
-										</includes>
-									</resource>
-								</resources>
-							</configuration>
-						</execution>
-					</executions>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 	</build>
-
-
 </project>
