@@ -18,6 +18,24 @@ public class EcoAgentsImpl extends EcoAgents {
     }
 
     @Override
+    protected ICreateAgent make_createAgent() {
+        return new ICreateAgent() {
+
+            @Override
+            public Teacher createTeacherAgent(String id) {
+                // TODO : instantiate with Newcomponent() ?
+                return make_Teacher(id);
+            }
+
+            @Override
+            public Student createStudentAgent(String id) {
+                return make_Student(id);
+            }
+
+        };
+    }
+    
+    @Override
     protected Teacher make_Teacher(final String id) {
         return new Teacher() {
 
@@ -30,15 +48,15 @@ public class EcoAgentsImpl extends EcoAgents {
     }
 
     @Override
-    protected ICreateAgent make_createAgent() {
-        return new ICreateAgent() {
+    protected Student make_Student(final String id) {
+        return new Student() {
 
             @Override
-            public Teacher createTeacherAgent(String id) {
-                // TODO : instantiate with Newcomponent() ?
-                return make_Teacher(id);
+            public ITwoStepsAgent make_agent() {
+                return new StudentAgent(id, environment, messagingService);
             }
 
         };
     }
+
 }

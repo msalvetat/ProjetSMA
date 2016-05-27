@@ -23,7 +23,7 @@ public class TeacherAgent implements ITwoStepsAgent {
     public TeacherAgent(String id, IEnvironment environment, IMessagingService messagingService) {
         this.id = id;
         this.environment = environment;
-        this.knowledge = new Knowledge();
+        this.knowledge = new Knowledge(environment);
         this.messagingService = messagingService;
         this.msgBox = messagingService.getMsgBox(this.id, String.class);
     }
@@ -33,9 +33,6 @@ public class TeacherAgent implements ITwoStepsAgent {
         HashSet<Room> rooms = (HashSet<Room>) environment.getRooms();
         HashMap<Room, TeacherAgent> allocationsTeacherRoom = (HashMap<Room, TeacherAgent>) environment
             .getAllocationsTeacherRoom();
-        knowledge.setRooms(rooms);
-        knowledge.setAllocationsTeacherRoom(allocationsTeacherRoom);
-        knowledge.setEtudiants((HashSet<EtudiantAgent>) environment.getEtudiants());
     }
 
     public Knowledge getKnowledge() {
@@ -47,7 +44,7 @@ public class TeacherAgent implements ITwoStepsAgent {
         Set<Room> rooms = this.knowledge.getRooms();
         Iterator<Room> iterator = rooms.iterator();
         Room room;
-        HashMap<Room, TeacherAgent> allocationsTeacherRoom = this.knowledge.getAllocationsTeacherRoom();
+        HashMap<Room, TeacherAgent> allocationsTeacherRoom = (HashMap<Room, TeacherAgent>) this.knowledge.getAllocationsTeacherRoom();
         while (iterator.hasNext() && !hasDecided) {
             room = iterator.next();
 
@@ -58,7 +55,7 @@ public class TeacherAgent implements ITwoStepsAgent {
                 // Act : booking the room
                 allocationsTeacherRoom.put(room, this);
                 hasDecided = true;
-                for (EtudiantAgent etudiant : this.knowledge.getEtudiants()) {
+                for (StudentAgent etudiant : this.knowledge.getEtudiants()) {
                     this.msgBox.send("Class in room " + room.getName(), etudiant.getId());
                 }
             }

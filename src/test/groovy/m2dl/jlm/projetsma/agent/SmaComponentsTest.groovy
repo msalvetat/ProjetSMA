@@ -13,10 +13,6 @@ import fr.irit.smac.libs.tooling.scheduling.contrib.twosteps.ITwoStepsAgent
 
 class SmaComponentsTest extends Specification {
 
-    def cleanup() {
-        AgentMessaging.shutdownMsgService(String.class)
-    }
-
     def 'check if an agent can be created'() {
 
         given:
@@ -43,6 +39,5 @@ class SmaComponentsTest extends Specification {
 
         then:
         environment.getRooms().size() == 3
-        environment.getEtudiants().size() == 3
     }
 }

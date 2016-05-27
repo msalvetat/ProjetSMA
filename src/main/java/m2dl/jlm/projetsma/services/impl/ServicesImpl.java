@@ -27,7 +27,7 @@ public class ServicesImpl extends Services {
             }
 
             @Override
-            public void createService() {
+            public void init() {
                 this.twoStepsSystemStrategy = new TwoStepsSystemStrategy(new HashSet<ITwoStepsAgent>(),
                     Executors.newFixedThreadPool(8));
             }
@@ -35,6 +35,11 @@ public class ServicesImpl extends Services {
             @Override
             public void addAgent(TeacherAgent agent) {
                 this.twoStepsSystemStrategy.addAgent(agent);
+            }
+
+            @Override
+            public void shutdown() {
+                this.twoStepsSystemStrategy.shutdown();                
             }
         };
     }
