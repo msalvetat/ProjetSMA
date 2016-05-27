@@ -3,15 +3,18 @@ package m2dl.jlm.projetsma.agent.impl;
 import fr.irit.smac.libs.tooling.scheduling.contrib.twosteps.ITwoStepsAgent;
 import m2dl.jlm.projetsma.agent.ICreateAgent;
 import m2dl.jlm.projetsma.environment.IEnvironment;
+import m2dl.jlm.projetsma.services.IMessagingService;
 import sma.EcoAgents;
 
 public class EcoAgentsImpl extends EcoAgents {
 
     private IEnvironment environment;
+    private IMessagingService messagingService;
 
     @Override
     public void start() {
         environment = requires().environmentService();
+        messagingService = requires().agentMessaging();
     }
 
     @Override
@@ -20,7 +23,7 @@ public class EcoAgentsImpl extends EcoAgents {
 
             @Override
             public ITwoStepsAgent make_agent() {
-                return new TeacherAgent(id, environment);
+                return new TeacherAgent(id, environment, messagingService);
             }
 
         };
@@ -38,23 +41,4 @@ public class EcoAgentsImpl extends EcoAgents {
 
         };
     }
-    // @Override
-    // protected ICreateAgent make_create() {
-    // return new ICreateAgent() {
-    //
-    // @Override
-    // public IGetTeacherAgent createTeacherAgent(String id) {
-    // // TODO Auto-generated method stub
-    // return new IGetTeacherAgent() {
-    //
-    // @Override
-    // public TeacherAgent getTeacherAgent() {
-    // // TODO Auto-generated method stub
-    // return newTeacherAgent();
-    // }
-    // };
-    // }
-    //
-    // };
-    // }
 }
