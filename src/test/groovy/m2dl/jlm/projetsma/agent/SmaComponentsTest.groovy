@@ -45,25 +45,4 @@ class SmaComponentsTest extends Specification {
         environment.getRooms().size() == 3
         environment.getEtudiants().size() == 3
     }
-
-    def 'check if an agent is doing the first step perceive'() {
-
-        given:
-        SMA.Component sma = new SMAImpl().newComponent()
-        IEnvironment environment = sma.environmentService()
-        environment.init()
-        ICreateAgent agent = sma.createAgent()
-        Teacher teacher = agent.createTeacherAgent("Teacher1")
-        ITwoStepsAgent teacherAgent = teacher.make_agent()
-        sma.systemStrategy().createService()
-        sma.systemStrategy().addAgent(teacherAgent)
-
-        when:
-        sma.systemStrategy().doStep()
-
-        then:
-        environment.getRooms().size() == 3
-        environment.getEtudiants().size() == 3
-        //TODO : better check
-    }
 }

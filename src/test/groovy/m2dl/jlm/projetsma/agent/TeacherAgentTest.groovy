@@ -1,63 +1,62 @@
 package m2dl.jlm.projetsma.agent
 
-import java.util.concurrent.Executors
-
-import m2dl.jlm.projetsma.agent.impl.TeacherAgent;
 import m2dl.jlm.projetsma.agent.knowledge.Knowledge
-import m2dl.jlm.projetsma.environment.impl.EnvironmentImpl;
-import m2dl.jlm.projetsma.environment.impl.Room;
-import spock.lang.Ignore
+import m2dl.jlm.projetsma.environment.IEnvironment
+import m2dl.jlm.projetsma.impl.SMAImpl
+import sma.SMA
+import sma.EcoAgents.Teacher
 import spock.lang.Specification
 import fr.irit.smac.libs.tooling.scheduling.contrib.twosteps.ITwoStepsAgent
-import fr.irit.smac.libs.tooling.scheduling.contrib.twosteps.TwoStepsSystemStrategy
 
 class TeacherAgentTest extends Specification {
 
-	def 'check the step perceive and decideAndAct for a teacher agent'() {
+    def 'check the step perceive and decideAndAct for a teacher agent'() {
 
-		given:
-		TwoStepsSystemStrategy systemStrategy = new TwoStepsSystemStrategy(new HashSet<ITwoStepsAgent>(),Executors.newFixedThreadPool(8));
-		TeacherAgent teacher = new TeacherAgent("sheogorath");
-		systemStrategy.addAgent(teacher);
+        given:
+        SMA.Component sma = new SMAImpl().newComponent()
+        IEnvironment environment = sma.environmentService()
+        environment.init()
+        ICreateAgent agent = sma.createAgent()
+        Teacher teacher = agent.createTeacherAgent("sheogorath")
+        ITwoStepsAgent teacherAgent = teacher.make_agent()
+        sma.systemStrategy().createService()
+        sma.systemStrategy().addAgent(teacherAgent)
 
-		when:
-		systemStrategy.doStep();
+        when:
+        sma.systemStrategy().doStep()
 
-		then:
-		TeacherAgent teacherSMA = systemStrategy.getAgents().first()
-		Knowledge knowledge = teacherSMA.getKnowledge()
-		knowledge.getRooms().size() == 3
-		// Step decideAndAct make that 1 room has been booked by sheogorath
-		knowledge.getAllocationsTeacherRoom().size() == 1
-	}
+        then:
+        Knowledge knowledge = teacherAgent.getKnowledge()
+        knowledge.getRooms().size() == 3
+        // Step decideAndAct make that 1 room has been booked by sheogorath
+        knowledge.getAllocationsTeacherRoom().size() == 1
+    }
 
-	def 'check behaviours for 3 agents'() {
+    def 'check behaviours for 3 agents'() {
 
-		given: "3 rooms and 3 teachers"
+        given: "3 rooms and 3 teachers"
+        SMA.Component sma = new SMAImpl().newComponent()
+        IEnvironment environment = sma.environmentService()
+        environment.init()
+        ICreateAgent agent = sma.createAgent()
+        Teacher teacher = agent.createTeacherAgent("sheogorath")
+        Teacher teacher2 = agent.createTeacherAgent("azura")
+        Teacher teacher3 = agent.createTeacherAgent("mehrunes dagon")
+        ITwoStepsAgent teacherAgent1 = teacher.make_agent()
+        ITwoStepsAgent teacherAgent2 = teacher2.make_agent()
+        ITwoStepsAgent teacherAgent3 = teacher3.make_agent()
+        sma.systemStrategy().createService()
+        sma.systemStrategy().addAgent(teacherAgent1)
+        sma.systemStrategy().addAgent(teacherAgent2)
+        sma.systemStrategy().addAgent(teacherAgent3)
 
-        // Reset instance
-        EnvironmentImpl.getInstance().setAllocationsTeacherRoom(new HashMap<Room,TeacherAgent>())
+        when: "the system is running"
+        sma.systemStrategy().doStep()
 
-		TwoStepsSystemStrategy systemStrategy = new TwoStepsSystemStrategy(new HashSet<ITwoStepsAgent>(),Executors.newFixedThreadPool(8));
-		TeacherAgent teacher1 = new TeacherAgent("sheogorath");
-		TeacherAgent teacher2 = new TeacherAgent("azura");
-		TeacherAgent teacher3 = new TeacherAgent("mehrunes dagon");
-
-		def iterator = EnvironmentImpl.getInstance().getRooms().iterator()
-
-		systemStrategy.addAgent(teacher1);
-		systemStrategy.addAgent(teacher2);
-		systemStrategy.addAgent(teacher3);
-
-		when: "the system is running"
-		systemStrategy.doStep();
-
-		then: "there are 3 allocationsTeacherRoom and each teacher has a booked room for himself"
-		TeacherAgent teacherSMA = systemStrategy.getAgents().first()
-		Knowledge knowledge = teacherSMA.getKnowledge()
-		knowledge.getAllocationsTeacherRoom().size() == 3
+        then: "there are 3 allocationsTeacherRoom and each teacher has a booked room for himself"
+        Knowledge knowledge = teacherAgent1.getKnowledge()
+        knowledge.getAllocationsTeacherRoom().size() == 3
         // Testing allocates rooms
-        knowledge.getAllocationsTeacherRoom().containsValue(teacher1) && knowledge.getAllocationsTeacherRoom().containsValue(teacher2) && knowledge.getAllocationsTeacherRoom().containsValue(teacher3)
-	}
-	
+        knowledge.getAllocationsTeacherRoom().containsValue(teacherAgent1) && knowledge.getAllocationsTeacherRoom().containsValue(teacherAgent2) && knowledge.getAllocationsTeacherRoom().containsValue(teacherAgent3)
+    }
 }
