@@ -4,12 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import m2dl.jlm.projetsma.agent.IKnowledge;
 import m2dl.jlm.projetsma.agent.impl.StudentAgent;
 import m2dl.jlm.projetsma.agent.impl.TeacherAgent;
 import m2dl.jlm.projetsma.environment.IEnvironment;
 import m2dl.jlm.projetsma.environment.impl.Room;
 
-public class Knowledge {
+public class Knowledge implements IKnowledge{
 
 	public String id;
 	public HashMap<Room, TeacherAgent> allocationsTeacherRoom;

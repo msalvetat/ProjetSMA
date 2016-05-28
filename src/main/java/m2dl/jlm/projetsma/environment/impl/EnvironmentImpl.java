@@ -12,6 +12,11 @@ import m2dl.jlm.projetsma.environment.IEnvironment;
 public class EnvironmentImpl extends sma.Environment{
 
     @Override
+    protected void start() {
+        provides().environment().init();
+    }
+    
+    @Override
     protected IEnvironment make_environment() {
         
         return new IEnvironment() {

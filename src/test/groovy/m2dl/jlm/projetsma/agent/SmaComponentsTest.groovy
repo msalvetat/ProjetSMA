@@ -20,24 +20,20 @@ class SmaComponentsTest extends Specification {
 
         when:
         ICreateAgent agent = sma.createAgent()
-        Teacher teacher = agent.createTeacherAgent("Teacher1")
-        ITwoStepsAgent teacherAgent = teacher.make_agent()
+        Teacher teacher = sma.createAgent().createTeacherAgent("Teacher1")
 
         then:
-        teacherAgent instanceof ITwoStepsAgent
+        sma.systemStrategy().getAgents().size() == 1
     }
 
 
     def 'check if the environment is correctly initialised'() {
 
-        given:
-        SMA.Component sma = new SMAImpl().newComponent()
-        IEnvironment environment = sma.environmentService()
-
         when:
-        environment.init()
+        SMA.Component sma = new SMAImpl().newComponent()
 
         then:
+        IEnvironment environment = sma.environmentService()
         environment.getRooms().size() == 3
     }
 }

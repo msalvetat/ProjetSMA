@@ -8,7 +8,7 @@ import sma.EcoAgents;
 
 public class EcoAgentsImpl extends EcoAgents {
 
-    private IEnvironment environment;
+    private IEnvironment      environment;
     private IMessagingService messagingService;
 
     @Override
@@ -22,28 +22,32 @@ public class EcoAgentsImpl extends EcoAgents {
         return new ICreateAgent() {
 
             @Override
-            public Teacher createTeacherAgent(String id) {
-                // TODO : instantiate with Newcomponent() ?
-                return make_Teacher(id);
+            public void createTeacherAgent(String id) {
+                Teacher.Component teacherComponent = newTeacher(id);
+                ITwoStepsAgent teacher = teacherComponent.agent();
+                requires().strategy().addAgent(teacher);
             }
 
             @Override
-            public Student createStudentAgent(String id) {
-                return make_Student(id);
+            public void createStudentAgent(String id) {
+                Student.Component studentComponent = newStudent(id);
+                ITwoStepsAgent student = studentComponent.agent();
+                requires().strategy().addAgent(student);
             }
 
         };
     }
-    
+
     @Override
     protected Teacher make_Teacher(final String id) {
+
         return new Teacher() {
 
             @Override
-            public ITwoStepsAgent make_agent() {
+            protected ITwoStepsAgent make_agent() {
                 return new TeacherAgent(id, environment, messagingService);
             }
-
+            
         };
     }
 

@@ -1,6 +1,8 @@
 package m2dl.jlm.projetsma.services;
 
-import m2dl.jlm.projetsma.agent.impl.TeacherAgent;
+import java.util.Collection;
+
+import fr.irit.smac.libs.tooling.scheduling.contrib.twosteps.ITwoStepsAgent;
 
 public interface ISchedulingService {
 
@@ -8,7 +10,9 @@ public interface ISchedulingService {
     
     public void doStep();
     
-    public void addAgent(TeacherAgent agent);
+    public void addAgent(ITwoStepsAgent agent);
     
     public void shutdown();
+    
+    public Collection<ITwoStepsAgent> getAgents();
 }

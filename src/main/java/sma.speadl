@@ -1,12 +1,7 @@
-
 import fr.irit.smac.libs.tooling.scheduling.contrib.twosteps.ITwoStepsAgent
-
 import m2dl.jlm.projetsma.agent.ICreateAgent
-
 import m2dl.jlm.projetsma.environment.IEnvironment
-
 import m2dl.jlm.projetsma.services.IMessagingService
-
 import m2dl.jlm.projetsma.services.ISchedulingService
 
 namespace sma {
@@ -23,6 +18,7 @@ namespace sma {
 		part agents: EcoAgents {
 			bind environmentService to environment.environment
 			bind agentMessaging to services.agentMessaging
+			bind strategy to services.systemStrategy
 		}
 
 		part services: Services {
@@ -40,6 +36,7 @@ namespace sma {
 		provides createAgent: ICreateAgent
 		requires environmentService: IEnvironment
 		requires agentMessaging: IMessagingService
+		requires strategy: ISchedulingService
 
 		species Teacher(id: String) {
 			provides agent: ITwoStepsAgent
@@ -47,6 +44,7 @@ namespace sma {
 
 		species Student(id: String) {
 			provides agent: ITwoStepsAgent
+
 		}
 	}
 

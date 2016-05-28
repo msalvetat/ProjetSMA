@@ -169,6 +169,10 @@ public abstract class SMA {
       public final IMessagingService agentMessaging() {
         return SMA.ComponentImpl.this.services().agentMessaging();
       }
+      
+      public final ISchedulingService strategy() {
+        return SMA.ComponentImpl.this.services().systemStrategy();
+      }
     }
     
     public final EcoAgents.Component agents() {

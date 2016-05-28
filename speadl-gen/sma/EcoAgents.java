@@ -4,6 +4,7 @@ import fr.irit.smac.libs.tooling.scheduling.contrib.twosteps.ITwoStepsAgent;
 import m2dl.jlm.projetsma.agent.ICreateAgent;
 import m2dl.jlm.projetsma.environment.IEnvironment;
 import m2dl.jlm.projetsma.services.IMessagingService;
+import m2dl.jlm.projetsma.services.ISchedulingService;
 
 @SuppressWarnings("all")
 public abstract class EcoAgents {
@@ -19,6 +20,12 @@ public abstract class EcoAgents {
      * 
      */
     public IMessagingService agentMessaging();
+    
+    /**
+     * This can be called by the implementation to access this required port.
+     * 
+     */
+    public ISchedulingService strategy();
   }
   
   public interface Component extends EcoAgents.Provides {

@@ -1,6 +1,7 @@
 
 package m2dl.jlm.projetsma.services.impl;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.concurrent.Executors;
 
@@ -8,13 +9,17 @@ import fr.irit.smac.libs.tooling.messaging.AgentMessaging;
 import fr.irit.smac.libs.tooling.messaging.IMsgBox;
 import fr.irit.smac.libs.tooling.scheduling.contrib.twosteps.ITwoStepsAgent;
 import fr.irit.smac.libs.tooling.scheduling.contrib.twosteps.TwoStepsSystemStrategy;
-import m2dl.jlm.projetsma.agent.impl.TeacherAgent;
 import m2dl.jlm.projetsma.services.IMessagingService;
 import m2dl.jlm.projetsma.services.ISchedulingService;
 import sma.Services;
 
 public class ServicesImpl extends Services {
 
+    @Override
+    protected void start() {
+        provides().systemStrategy().init();
+    }
+    
     @Override
     protected ISchedulingService make_systemStrategy() {
         return new ISchedulingService() {
@@ -33,13 +38,18 @@ public class ServicesImpl extends Services {
             }
 
             @Override
-            public void addAgent(TeacherAgent agent) {
+            public void addAgent(ITwoStepsAgent agent) {
                 this.twoStepsSystemStrategy.addAgent(agent);
             }
 
             @Override
             public void shutdown() {
                 this.twoStepsSystemStrategy.shutdown();                
+            }
+
+            @Override
+            public Collection<ITwoStepsAgent> getAgents() {
+                return this.twoStepsSystemStrategy.getAgents();
             }
         };
     }
