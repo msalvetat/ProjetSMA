@@ -22,7 +22,6 @@ public class EnvironmentImpl extends sma.Environment{
 
             public void init() {
                 
-                System.out.println("hello");
                 this.rooms = new HashSet<Room>();
                 this.rooms.add(new Room("A1"));
                 this.rooms.add(new Room("A2"));

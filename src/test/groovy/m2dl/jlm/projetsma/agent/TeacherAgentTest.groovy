@@ -37,7 +37,6 @@ class TeacherAgentTest extends Specification {
     def 'check behaviours for 3 agents'() {
 
         given: "3 rooms and 3 teachers"
-        println "hey"
         SMA.Component sma = new SMAImpl().newComponent()
         IEnvironment environment = sma.environmentService()
         environment.init()
