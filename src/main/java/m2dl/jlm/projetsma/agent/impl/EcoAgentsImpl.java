@@ -3,7 +3,7 @@ package m2dl.jlm.projetsma.agent.impl;
 import m2dl.jlm.projetsma.agent.ICreateAgent;
 import m2dl.jlm.projetsma.agent.impl.student.EcoStudentImpl;
 import m2dl.jlm.projetsma.agent.impl.teacher.EcoTeacherImpl;
-import m2dl.jlm.projetsma.agent.knowledge.EcoKnowledgeImpl;
+import m2dl.jlm.projetsma.agent.knowledge.impl.EcoKnowledgeImpl;
 import sma.agent.EcoStudent;
 import sma.agent.EcoTeacher;
 import sma.ecoAgents.EcoAgents;

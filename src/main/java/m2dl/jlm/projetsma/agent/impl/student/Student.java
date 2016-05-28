@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 import fr.irit.smac.libs.tooling.messaging.IMsgBox;
 import fr.irit.smac.libs.tooling.scheduling.contrib.twosteps.ITwoStepsAgent;
-import m2dl.jlm.projetsma.agent.IKnowledge;
+import m2dl.jlm.projetsma.agent.knowledge.IKnowledge;
 import m2dl.jlm.projetsma.services.IMessagingService;
 
 public class Student implements ITwoStepsAgent {

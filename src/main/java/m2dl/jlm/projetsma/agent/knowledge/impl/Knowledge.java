@@ -1,12 +1,12 @@
-package m2dl.jlm.projetsma.agent.knowledge;
+package m2dl.jlm.projetsma.agent.knowledge.impl;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import m2dl.jlm.projetsma.agent.IKnowledge;
 import m2dl.jlm.projetsma.agent.impl.student.Student;
 import m2dl.jlm.projetsma.agent.impl.teacher.Teacher;
+import m2dl.jlm.projetsma.agent.knowledge.IKnowledge;
 import m2dl.jlm.projetsma.environment.IEnvironment;
 import m2dl.jlm.projetsma.environment.impl.Room;
 

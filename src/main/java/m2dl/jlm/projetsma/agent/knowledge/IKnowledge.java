@@ -1,4 +1,4 @@
-package m2dl.jlm.projetsma.agent;
+package m2dl.jlm.projetsma.agent.knowledge;
 
 import java.util.HashMap;
 import java.util.Map;

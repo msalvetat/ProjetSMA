@@ -1,7 +1,7 @@
 package sma.ecoAgents;
 
 import m2dl.jlm.projetsma.agent.ICreateAgent;
-import m2dl.jlm.projetsma.agent.IKnowledge;
+import m2dl.jlm.projetsma.agent.knowledge.IKnowledge;
 import m2dl.jlm.projetsma.environment.IEnvironment;
 import m2dl.jlm.projetsma.services.IMessagingService;
 import m2dl.jlm.projetsma.services.ISchedulingService;

@@ -7,8 +7,8 @@ import java.util.Set;
 
 import fr.irit.smac.libs.tooling.messaging.IMsgBox;
 import fr.irit.smac.libs.tooling.scheduling.contrib.twosteps.ITwoStepsAgent;
-import m2dl.jlm.projetsma.agent.IKnowledge;
 import m2dl.jlm.projetsma.agent.impl.student.Student;
+import m2dl.jlm.projetsma.agent.knowledge.IKnowledge;
 import m2dl.jlm.projetsma.environment.impl.Room;
 import m2dl.jlm.projetsma.services.IMessagingService;
 

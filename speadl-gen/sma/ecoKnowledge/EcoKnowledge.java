@@ -1,6 +1,6 @@
 package sma.ecoKnowledge;
 
-import m2dl.jlm.projetsma.agent.IKnowledge;
+import m2dl.jlm.projetsma.agent.knowledge.IKnowledge;
 import m2dl.jlm.projetsma.environment.IEnvironment;
 
 @SuppressWarnings("all")
