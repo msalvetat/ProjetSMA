@@ -4,15 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import m2dl.jlm.projetsma.agent.impl.StudentAgent;
-import m2dl.jlm.projetsma.agent.impl.TeacherAgent;
+import m2dl.jlm.projetsma.agent.impl.student.Student;
+import m2dl.jlm.projetsma.agent.impl.teacher.Teacher;
 import m2dl.jlm.projetsma.environment.impl.Room;
 
 public interface IKnowledge {
 
-    public Map<Room, TeacherAgent> getAllocationsTeacherRoom();
+    public Map<Room, Teacher> getAllocationsTeacherRoom();
 
-    public void setAllocationsTeacherRoom(HashMap<Room, TeacherAgent> allocationsTeacherRoom);
+    public void setAllocationsTeacherRoom(HashMap<Room, Teacher> allocationsTeacherRoom);
 
     public Set<Room> getRooms();
 
@@ -20,7 +20,7 @@ public interface IKnowledge {
 
     public String getId();
 
-    public Set<StudentAgent> getEtudiants();
+    public Set<Student> getEtudiants();
 
-    public void setEtudiants(Set<StudentAgent> etudiants);
+    public void setEtudiants(Set<Student> etudiants);
 }

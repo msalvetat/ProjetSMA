@@ -1,15 +1,10 @@
 package m2dl.jlm.projetsma.agent
 
-import m2dl.jlm.projetsma.agent.impl.EcoAgentsImpl
+import m2dl.jlm.projetsma.agent.impl.teacher.Teacher;
 import m2dl.jlm.projetsma.environment.IEnvironment
-import m2dl.jlm.projetsma.environment.impl.EnvironmentImpl
 import m2dl.jlm.projetsma.impl.SMAImpl
-import sma.EcoAgents
 import sma.SMA
-import sma.EcoAgents.Teacher
 import spock.lang.Specification
-import fr.irit.smac.libs.tooling.messaging.AgentMessaging
-import fr.irit.smac.libs.tooling.scheduling.contrib.twosteps.ITwoStepsAgent
 
 class SmaComponentsTest extends Specification {
 
@@ -23,7 +18,7 @@ class SmaComponentsTest extends Specification {
         Teacher teacher = sma.createAgent().createTeacherAgent("Teacher1")
 
         then:
-        sma.systemStrategy().getAgents().size() == 1
+        sma.strategyService().getAgents().size() == 1
     }
 
 

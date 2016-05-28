@@ -3,8 +3,8 @@ package m2dl.jlm.projetsma.environment;
 import java.util.Map;
 import java.util.Set;
 
-import m2dl.jlm.projetsma.agent.impl.StudentAgent;
-import m2dl.jlm.projetsma.agent.impl.TeacherAgent;
+import m2dl.jlm.projetsma.agent.impl.student.Student;
+import m2dl.jlm.projetsma.agent.impl.teacher.Teacher;
 import m2dl.jlm.projetsma.environment.impl.Room;
 
 public interface IEnvironment {
@@ -15,12 +15,12 @@ public interface IEnvironment {
     
     public void setRooms(Set<Room> rooms);
     
-    public Map<Room, TeacherAgent> getAllocationsTeacherRoom();
+    public Map<Room, Teacher> getAllocationsTeacherRoom();
     
-    public void setAllocationsTeacherRoom(Map<Room, TeacherAgent> allocationsTeacherRoom);
+    public void setAllocationsTeacherRoom(Map<Room, Teacher> allocationsTeacherRoom);
     
-    public Set<StudentAgent> getEtudiants();
+    public Set<Student> getEtudiants();
     
-    public void setEtudiants(Set<StudentAgent> etudiants);
+    public void setEtudiants(Set<Student> etudiants);
 
 }

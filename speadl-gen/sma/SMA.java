@@ -21,7 +21,7 @@ public abstract class SMA {
      * This can be called to access the provided port.
      * 
      */
-    public ISchedulingService systemStrategy();
+    public ISchedulingService strategyService();
     
     /**
      * This can be called to access the provided port.
@@ -134,7 +134,7 @@ public abstract class SMA {
       }
     }
     
-    public ISchedulingService systemStrategy() {
+    public ISchedulingService strategyService() {
       return this.services().systemStrategy();
     }
     
@@ -162,15 +162,15 @@ public abstract class SMA {
     private EcoAgents implem_agents;
     
     private final class BridgeImpl_agents implements EcoAgents.Requires {
-      public final IEnvironment environmentService() {
+      public final IEnvironment environment() {
         return SMA.ComponentImpl.this.environment().environment();
       }
       
-      public final IMessagingService agentMessaging() {
+      public final IMessagingService messagingService() {
         return SMA.ComponentImpl.this.services().agentMessaging();
       }
       
-      public final ISchedulingService strategy() {
+      public final ISchedulingService strategyService() {
         return SMA.ComponentImpl.this.services().systemStrategy();
       }
     }

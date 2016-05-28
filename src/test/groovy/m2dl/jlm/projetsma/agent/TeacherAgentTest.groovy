@@ -15,14 +15,14 @@ class TeacherAgentTest extends Specification {
         sma.createAgent().createTeacherAgent("sheogorath")
 
         when:
-        sma.systemStrategy().doStep()
+        sma.strategyService().doStep()
         sleep(1000)
 
         then:
         environment.getRooms().size() == 3
         // Step decideAndAct make that 1 room has been booked by sheogorath
         environment.getAllocationsTeacherRoom().size() == 1
-        sma.systemStrategy().shutdown()
+        sma.strategyService().shutdown()
     }
 
     def 'check behaviours for 3 agents'() {
@@ -35,7 +35,7 @@ class TeacherAgentTest extends Specification {
         sma.createAgent().createTeacherAgent("mehrunes dagon")
 
         when: "the system is running"
-        sma.systemStrategy().doStep()
+        sma.strategyService().doStep()
         sleep(2000)
         
         then: "there are 3 allocationsTeacherRoom and each teacher has a booked room for himself"

@@ -1,0 +1,14 @@
+import m2dl.jlm.projetsma.agent.IKnowledge
+import m2dl.jlm.projetsma.environment.IEnvironment
+
+namespace sma.knowledge {
+	
+	ecosystem EcoKnowledge {
+		
+		species KnowledgeS(id: String) {
+			provides knowledge: IKnowledge			
+		}
+		
+		requires environment: IEnvironment
+	}
+}
