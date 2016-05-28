@@ -1,4 +1,4 @@
-package sma.knowledge;
+package sma.ecoKnowledge;
 
 import m2dl.jlm.projetsma.agent.IKnowledge;
 import m2dl.jlm.projetsma.environment.IEnvironment;
@@ -93,7 +93,7 @@ public abstract class EcoKnowledge {
         assert this.knowledge == null: "This is a bug.";
         this.knowledge = this.implementation.make_knowledge();
         if (this.knowledge == null) {
-        	throw new RuntimeException("make_knowledge() in sma.knowledge.EcoKnowledge$KnowledgeS should not return null.");
+        	throw new RuntimeException("make_knowledge() in sma.ecoKnowledge.EcoKnowledge$KnowledgeS should not return null.");
         }
       }
       
@@ -332,7 +332,7 @@ public abstract class EcoKnowledge {
   public EcoKnowledge.KnowledgeS _createImplementationOfKnowledgeS(final String id) {
     EcoKnowledge.KnowledgeS implem = make_KnowledgeS(id);
     if (implem == null) {
-    	throw new RuntimeException("make_KnowledgeS() in sma.knowledge.EcoKnowledge should not return null.");
+    	throw new RuntimeException("make_KnowledgeS() in sma.ecoKnowledge.EcoKnowledge should not return null.");
     }
     assert implem.ecosystemComponent == null: "This is a bug.";
     assert this.selfComponent != null: "This is a bug.";

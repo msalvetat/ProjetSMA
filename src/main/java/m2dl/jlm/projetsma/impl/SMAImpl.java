@@ -3,10 +3,10 @@ package m2dl.jlm.projetsma.impl;
 import m2dl.jlm.projetsma.agent.impl.EcoAgentsImpl;
 import m2dl.jlm.projetsma.environment.impl.EnvironmentImpl;
 import m2dl.jlm.projetsma.services.impl.ServicesImpl;
-import sma.EcoAgents;
-import sma.Environment;
 import sma.SMA;
-import sma.Services;
+import sma.ecoAgents.EcoAgents;
+import sma.environment.Environment;
+import sma.services.Services;
 
 public class SMAImpl extends SMA{
 
@@ -25,8 +25,4 @@ public class SMAImpl extends SMA{
     protected Environment make_environment() {
         return new EnvironmentImpl();
     }
-
-
-
-
 }

@@ -1,10 +1,9 @@
 import m2dl.jlm.projetsma.agent.ICreateAgent
 import m2dl.jlm.projetsma.environment.IEnvironment
-import m2dl.jlm.projetsma.services.IMessagingService
 import m2dl.jlm.projetsma.services.ISchedulingService
-import sma.agent.EcoStudent
-import sma.agent.EcoTeacher
-import sma.knowledge.EcoKnowledge
+import sma.ecoAgents.EcoAgents
+import sma.environment.Environment
+import sma.services.Services
 
 namespace sma {
 
@@ -27,55 +26,4 @@ namespace sma {
 		}
 
 	}
-
-	component Environment {
-
-		provides environment: IEnvironment
-	}
-
-	ecosystem EcoAgents {
-
-		provides createAgent: ICreateAgent
-		requires environment: IEnvironment
-		requires messagingService: IMessagingService
-		requires strategyService: ISchedulingService
-
-		species TeacherAgent(id: String) {
-
-			use knowledgeS: ecoKnowledge.KnowledgeS(id) {
-			}
-			use teacherS: ecoTeacher.TeacherS(id) {
-				bind knowledge to knowledgeS.knowledge
-			}
-		}
-
-		species StudentAgent(id: String) {
-			use knowledgeS: ecoKnowledge.KnowledgeS(id) {
-			}
-			use studentS: ecoStudent.StudentS(id) {
-				bind knowledge to knowledgeS.knowledge
-			}
-		}
-
-		part ecoKnowledge: EcoKnowledge {
-			bind environment to environment
-		}
-
-		part ecoTeacher: EcoTeacher {
-			bind strategyService to strategyService
-			bind messagingService to messagingService
-		}
-
-		part ecoStudent: EcoStudent {
-			bind strategyService to strategyService
-			bind messagingService to messagingService
-		}
-	}
-
-	component Services {
-
-		provides systemStrategy: ISchedulingService
-		provides agentMessaging: IMessagingService
-	}
-
 }

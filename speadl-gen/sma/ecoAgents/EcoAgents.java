@@ -1,4 +1,4 @@
-package sma;
+package sma.ecoAgents;
 
 import m2dl.jlm.projetsma.agent.ICreateAgent;
 import m2dl.jlm.projetsma.agent.IKnowledge;
@@ -7,7 +7,7 @@ import m2dl.jlm.projetsma.services.IMessagingService;
 import m2dl.jlm.projetsma.services.ISchedulingService;
 import sma.agent.EcoStudent;
 import sma.agent.EcoTeacher;
-import sma.knowledge.EcoKnowledge;
+import sma.ecoKnowledge.EcoKnowledge;
 
 @SuppressWarnings("all")
 public abstract class EcoAgents {
@@ -86,7 +86,7 @@ public abstract class EcoAgents {
       assert this.implem_ecoKnowledge == null: "This is a bug.";
       this.implem_ecoKnowledge = this.implementation.make_ecoKnowledge();
       if (this.implem_ecoKnowledge == null) {
-      	throw new RuntimeException("make_ecoKnowledge() in sma.EcoAgents should not return null.");
+      	throw new RuntimeException("make_ecoKnowledge() in sma.ecoAgents.EcoAgents should not return null.");
       }
       this.ecoKnowledge = this.implem_ecoKnowledge._newComponent(new BridgeImpl_ecoKnowledge(), false);
       
@@ -97,7 +97,7 @@ public abstract class EcoAgents {
       assert this.implem_ecoTeacher == null: "This is a bug.";
       this.implem_ecoTeacher = this.implementation.make_ecoTeacher();
       if (this.implem_ecoTeacher == null) {
-      	throw new RuntimeException("make_ecoTeacher() in sma.EcoAgents should not return null.");
+      	throw new RuntimeException("make_ecoTeacher() in sma.ecoAgents.EcoAgents should not return null.");
       }
       this.ecoTeacher = this.implem_ecoTeacher._newComponent(new BridgeImpl_ecoTeacher(), false);
       
@@ -108,7 +108,7 @@ public abstract class EcoAgents {
       assert this.implem_ecoStudent == null: "This is a bug.";
       this.implem_ecoStudent = this.implementation.make_ecoStudent();
       if (this.implem_ecoStudent == null) {
-      	throw new RuntimeException("make_ecoStudent() in sma.EcoAgents should not return null.");
+      	throw new RuntimeException("make_ecoStudent() in sma.ecoAgents.EcoAgents should not return null.");
       }
       this.ecoStudent = this.implem_ecoStudent._newComponent(new BridgeImpl_ecoStudent(), false);
       
@@ -124,7 +124,7 @@ public abstract class EcoAgents {
       assert this.createAgent == null: "This is a bug.";
       this.createAgent = this.implementation.make_createAgent();
       if (this.createAgent == null) {
-      	throw new RuntimeException("make_createAgent() in sma.EcoAgents should not return null.");
+      	throw new RuntimeException("make_createAgent() in sma.ecoAgents.EcoAgents should not return null.");
       }
     }
     
@@ -755,7 +755,7 @@ public abstract class EcoAgents {
   public EcoAgents.TeacherAgent _createImplementationOfTeacherAgent(final String id) {
     EcoAgents.TeacherAgent implem = make_TeacherAgent(id);
     if (implem == null) {
-    	throw new RuntimeException("make_TeacherAgent() in sma.EcoAgents should not return null.");
+    	throw new RuntimeException("make_TeacherAgent() in sma.ecoAgents.EcoAgents should not return null.");
     }
     assert implem.ecosystemComponent == null: "This is a bug.";
     assert this.selfComponent != null: "This is a bug.";
@@ -793,7 +793,7 @@ public abstract class EcoAgents {
   public EcoAgents.StudentAgent _createImplementationOfStudentAgent(final String id) {
     EcoAgents.StudentAgent implem = make_StudentAgent(id);
     if (implem == null) {
-    	throw new RuntimeException("make_StudentAgent() in sma.EcoAgents should not return null.");
+    	throw new RuntimeException("make_StudentAgent() in sma.ecoAgents.EcoAgents should not return null.");
     }
     assert implem.ecosystemComponent == null: "This is a bug.";
     assert this.selfComponent != null: "This is a bug.";

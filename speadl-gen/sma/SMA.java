@@ -4,9 +4,9 @@ import m2dl.jlm.projetsma.agent.ICreateAgent;
 import m2dl.jlm.projetsma.environment.IEnvironment;
 import m2dl.jlm.projetsma.services.IMessagingService;
 import m2dl.jlm.projetsma.services.ISchedulingService;
-import sma.EcoAgents;
-import sma.Environment;
-import sma.Services;
+import sma.ecoAgents.EcoAgents;
+import sma.environment.Environment;
+import sma.services.Services;
 
 @SuppressWarnings("all")
 public abstract class SMA {

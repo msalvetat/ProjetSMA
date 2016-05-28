@@ -1,0 +1,9 @@
+import m2dl.jlm.projetsma.environment.IEnvironment
+
+namespace sma.environment {
+
+	component Environment {
+
+		provides environment: IEnvironment
+	}
+}

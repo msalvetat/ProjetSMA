@@ -1,0 +1,11 @@
+import m2dl.jlm.projetsma.services.IMessagingService
+import m2dl.jlm.projetsma.services.ISchedulingService
+
+namespace sma.services {
+
+	component Services {
+
+		provides systemStrategy: ISchedulingService
+		provides agentMessaging: IMessagingService
+	}
+}

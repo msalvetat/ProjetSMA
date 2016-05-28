@@ -1,4 +1,4 @@
-package sma;
+package sma.services;
 
 import m2dl.jlm.projetsma.services.IMessagingService;
 import m2dl.jlm.projetsma.services.ISchedulingService;
@@ -46,7 +46,7 @@ public abstract class Services {
       assert this.systemStrategy == null: "This is a bug.";
       this.systemStrategy = this.implementation.make_systemStrategy();
       if (this.systemStrategy == null) {
-      	throw new RuntimeException("make_systemStrategy() in sma.Services should not return null.");
+      	throw new RuntimeException("make_systemStrategy() in sma.services.Services should not return null.");
       }
     }
     
@@ -54,7 +54,7 @@ public abstract class Services {
       assert this.agentMessaging == null: "This is a bug.";
       this.agentMessaging = this.implementation.make_agentMessaging();
       if (this.agentMessaging == null) {
-      	throw new RuntimeException("make_agentMessaging() in sma.Services should not return null.");
+      	throw new RuntimeException("make_agentMessaging() in sma.services.Services should not return null.");
       }
     }
     

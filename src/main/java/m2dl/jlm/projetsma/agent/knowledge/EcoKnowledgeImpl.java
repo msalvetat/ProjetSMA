@@ -1,7 +1,7 @@
 package m2dl.jlm.projetsma.agent.knowledge;
 
 import m2dl.jlm.projetsma.agent.IKnowledge;
-import sma.knowledge.EcoKnowledge;
+import sma.ecoKnowledge.EcoKnowledge;
 
 public class EcoKnowledgeImpl extends EcoKnowledge {
 

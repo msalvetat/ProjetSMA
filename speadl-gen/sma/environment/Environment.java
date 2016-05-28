@@ -1,4 +1,4 @@
-package sma;
+package sma.environment;
 
 import m2dl.jlm.projetsma.environment.IEnvironment;
 
@@ -39,7 +39,7 @@ public abstract class Environment {
       assert this.environment == null: "This is a bug.";
       this.environment = this.implementation.make_environment();
       if (this.environment == null) {
-      	throw new RuntimeException("make_environment() in sma.Environment should not return null.");
+      	throw new RuntimeException("make_environment() in sma.environment.Environment should not return null.");
       }
     }
     

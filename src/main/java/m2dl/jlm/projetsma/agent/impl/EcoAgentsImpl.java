@@ -4,10 +4,10 @@ import m2dl.jlm.projetsma.agent.ICreateAgent;
 import m2dl.jlm.projetsma.agent.impl.student.EcoStudentImpl;
 import m2dl.jlm.projetsma.agent.impl.teacher.EcoTeacherImpl;
 import m2dl.jlm.projetsma.agent.knowledge.EcoKnowledgeImpl;
-import sma.EcoAgents;
 import sma.agent.EcoStudent;
 import sma.agent.EcoTeacher;
-import sma.knowledge.EcoKnowledge;
+import sma.ecoAgents.EcoAgents;
+import sma.ecoKnowledge.EcoKnowledge;
 
 public class EcoAgentsImpl extends EcoAgents {
 

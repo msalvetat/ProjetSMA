@@ -1,0 +1,54 @@
+import m2dl.jlm.projetsma.agent.ICreateAgent
+import m2dl.jlm.projetsma.environment.IEnvironment
+import m2dl.jlm.projetsma.services.IMessagingService
+import m2dl.jlm.projetsma.services.ISchedulingService
+import sma.agent.EcoStudent
+import sma.agent.EcoTeacher
+import sma.ecoKnowledge.EcoKnowledge
+
+namespace sma.ecoAgents {
+
+	ecosystem EcoAgents {
+
+		provides createAgent: ICreateAgent
+		requires environment: IEnvironment
+		requires messagingService: IMessagingService
+		requires strategyService: ISchedulingService
+
+		// A teacher is composed of a knowledge and his content
+		species TeacherAgent(id: String) {
+
+			use knowledgeS: ecoKnowledge.KnowledgeS(id) {
+			}
+			use teacherS: ecoTeacher.TeacherS(id) {
+				bind knowledge to knowledgeS.knowledge
+			}
+		}
+
+		// A student is composed of a knowledge and his content
+		species StudentAgent(id: String) {
+			use knowledgeS: ecoKnowledge.KnowledgeS(id) {
+			}
+			use studentS: ecoStudent.StudentS(id) {
+				bind knowledge to knowledgeS.knowledge
+			}
+		}
+
+		// The ecosystem knowledge allows to create a knowledge for each agent
+		part ecoKnowledge: EcoKnowledge {
+			bind environment to environment
+		}
+
+		// The ecosystem teacher allows to create a teacher content for each teacherAgent
+		part ecoTeacher: EcoTeacher {
+			bind strategyService to strategyService
+			bind messagingService to messagingService
+		}
+
+		// The ecosystem student allows to create a student content for each studentAgent
+		part ecoStudent: EcoStudent {
+			bind strategyService to strategyService
+			bind messagingService to messagingService
+		}
+	}
+}
