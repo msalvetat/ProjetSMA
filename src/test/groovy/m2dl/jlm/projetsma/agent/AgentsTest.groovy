@@ -1,9 +1,9 @@
 package m2dl.jlm.projetsma.agent
 
-import m2dl.jlm.projetsma.agent.impl.room.Room
-import m2dl.jlm.projetsma.agent.impl.teacher.Teacher
+import m2dl.jlm.projetsma.SMAImpl
+import m2dl.jlm.projetsma.agent.room.Room
+import m2dl.jlm.projetsma.agent.teacher.Teacher;
 import m2dl.jlm.projetsma.environment.IEnvironment
-import m2dl.jlm.projetsma.impl.SMAImpl
 import sma.SMA
 import spock.lang.Specification
 import fr.irit.smac.libs.tooling.scheduling.contrib.twosteps.ITwoStepsAgent

@@ -1,9 +1,9 @@
 package sma.ecoAgents;
 
 import m2dl.jlm.projetsma.agent.ICreateAgent;
-import m2dl.jlm.projetsma.agent.impl.room.knowledge.IKnowledgeRoom;
-import m2dl.jlm.projetsma.agent.impl.student.knowledge.IKnowledgeStudent;
-import m2dl.jlm.projetsma.agent.impl.teacher.knowledge.IKnowledgeTeacher;
+import m2dl.jlm.projetsma.agent.room.knowledge.IKnowledgeRoom;
+import m2dl.jlm.projetsma.agent.student.knowledge.IKnowledgeStudent;
+import m2dl.jlm.projetsma.agent.teacher.knowledge.IKnowledgeTeacher;
 import m2dl.jlm.projetsma.environment.IEnvironment;
 import m2dl.jlm.projetsma.services.IMessagingService;
 import m2dl.jlm.projetsma.services.ISchedulingService;

@@ -1,6 +1,6 @@
 package sma.ecoKnowledgeStudent;
 
-import m2dl.jlm.projetsma.agent.impl.student.knowledge.IKnowledgeStudent;
+import m2dl.jlm.projetsma.agent.student.knowledge.IKnowledgeStudent;
 
 @SuppressWarnings("all")
 public abstract class EcoKnowledgeStudent {

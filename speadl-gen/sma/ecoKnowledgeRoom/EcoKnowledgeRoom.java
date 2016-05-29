@@ -1,6 +1,6 @@
 package sma.ecoKnowledgeRoom;
 
-import m2dl.jlm.projetsma.agent.impl.room.knowledge.IKnowledgeRoom;
+import m2dl.jlm.projetsma.agent.room.knowledge.IKnowledgeRoom;
 
 @SuppressWarnings("all")
 public abstract class EcoKnowledgeRoom {

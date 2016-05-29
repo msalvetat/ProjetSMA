@@ -1,6 +1,6 @@
 package sma.ecoKnowledgeTeacher;
 
-import m2dl.jlm.projetsma.agent.impl.teacher.knowledge.IKnowledgeTeacher;
+import m2dl.jlm.projetsma.agent.teacher.knowledge.IKnowledgeTeacher;
 
 @SuppressWarnings("all")
 public abstract class EcoKnowledgeTeacher {

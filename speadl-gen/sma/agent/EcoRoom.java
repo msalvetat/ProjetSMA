@@ -1,7 +1,7 @@
 package sma.agent;
 
 import fr.irit.smac.libs.tooling.scheduling.contrib.twosteps.ITwoStepsAgent;
-import m2dl.jlm.projetsma.agent.impl.room.knowledge.IKnowledgeRoom;
+import m2dl.jlm.projetsma.agent.room.knowledge.IKnowledgeRoom;
 import m2dl.jlm.projetsma.services.IMessagingService;
 import m2dl.jlm.projetsma.services.ISchedulingService;
 

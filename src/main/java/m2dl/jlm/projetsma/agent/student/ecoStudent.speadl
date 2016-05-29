@@ -1,0 +1,18 @@
+import fr.irit.smac.libs.tooling.scheduling.contrib.twosteps.ITwoStepsAgent
+import m2dl.jlm.projetsma.agent.student.knowledge.IKnowledgeStudent
+import m2dl.jlm.projetsma.services.IMessagingService
+import m2dl.jlm.projetsma.services.ISchedulingService
+
+namespace sma.agent {
+
+	ecosystem EcoStudent {
+
+		species StudentS(id: String) {
+			provides student: ITwoStepsAgent
+			requires knowledge: IKnowledgeStudent
+		}
+
+		requires strategyService: ISchedulingService
+		requires messagingService: IMessagingService
+	}
+}
