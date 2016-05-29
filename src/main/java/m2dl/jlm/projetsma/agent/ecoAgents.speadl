@@ -2,6 +2,7 @@ import m2dl.jlm.projetsma.agent.ICreateAgent
 import m2dl.jlm.projetsma.environment.IEnvironment
 import m2dl.jlm.projetsma.services.IMessagingService
 import m2dl.jlm.projetsma.services.ISchedulingService
+import sma.agent.EcoRoom
 import sma.agent.EcoStudent
 import sma.agent.EcoTeacher
 import sma.ecoKnowledge.EcoKnowledge
@@ -34,6 +35,15 @@ namespace sma.ecoAgents {
 			}
 		}
 
+		// A room is composed of a knowledge and his content
+		species RoomAgent(id: String) {
+			use knowledgeS: ecoKnowledge.KnowledgeS(id) {
+			}
+			use roomS: ecoRoom.RoomS(id) {
+				bind knowledge to knowledgeS.knowledge
+			}
+		}
+
 		// The ecosystem knowledge allows to create a knowledge for each agent
 		part ecoKnowledge: EcoKnowledge {
 			bind environment to environment
@@ -47,6 +57,12 @@ namespace sma.ecoAgents {
 
 		// The ecosystem student allows to create a student content for each studentAgent
 		part ecoStudent: EcoStudent {
+			bind strategyService to strategyService
+			bind messagingService to messagingService
+		}
+
+		// The ecosystem room allows to create a room content for each roomAgent
+		part ecoRoom: EcoRoom {
 			bind strategyService to strategyService
 			bind messagingService to messagingService
 		}
