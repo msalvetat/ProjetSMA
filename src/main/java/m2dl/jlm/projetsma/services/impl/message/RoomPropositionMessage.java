@@ -1,21 +1,17 @@
-package m2dl.jlm.projetsma.services.impl;
+package m2dl.jlm.projetsma.services.impl.message;
 
 import m2dl.jlm.projetsma.agent.impl.room.Room;
 
-public class Message {
+public class RoomPropositionMessage extends AbstractMessage {
 
     private String message;
     private Room room;
     
-    public Message(String message) {
-        super();
-        this.message = message;
-    }
-
-    public Message(String message, Room room) {
+    public RoomPropositionMessage(String message, Room room) {
         super();
         this.message = message;
         this.room = room;
+        this.messageType = EMessageType.ROOM_PROPOSITION;
     }
 
     public Room getRoom() {

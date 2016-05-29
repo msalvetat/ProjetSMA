@@ -16,16 +16,21 @@ class AgentsTest extends Specification {
         SMA.Component sma = new SMAImpl().newComponent()
         IEnvironment environment = sma.environmentService()
         
+        for (int i=0; i<5; i++) {
+            sma.createAgent().createStudentAgent("student" + i);
+        }
+        
         for (int i=0; i<10; i++) {
             sma.createAgent().createRoomAgent("room" + i)
             sma.createAgent().createTeacherAgent("teacher" + i)
         }
-
+        
         when:
         sma.strategyService().doStep()
         sma.strategyService().doStep()
         sma.strategyService().doStep()
-
+        sma.strategyService().doStep()
+        
         sleep(3000)
 
         then:

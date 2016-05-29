@@ -11,6 +11,8 @@ import fr.irit.smac.libs.tooling.scheduling.contrib.twosteps.ITwoStepsAgent;
 import fr.irit.smac.libs.tooling.scheduling.contrib.twosteps.TwoStepsSystemStrategy;
 import m2dl.jlm.projetsma.services.IMessagingService;
 import m2dl.jlm.projetsma.services.ISchedulingService;
+import m2dl.jlm.projetsma.services.impl.message.AbstractMessage;
+import m2dl.jlm.projetsma.services.impl.message.RoomPropositionMessage;
 import sma.services.Services;
 
 public class ServicesImpl extends Services {
@@ -59,13 +61,13 @@ public class ServicesImpl extends Services {
         return new IMessagingService() {
 
             @Override
-            public IMsgBox getMsgBox(String agentId, Class<?> messageClassType) {
-                return AgentMessaging.getMsgBox(agentId, messageClassType);
+            public IMsgBox<AbstractMessage> getMsgBox(String agentId, Class<?> messageClassType) {
+                return (IMsgBox<AbstractMessage>) AgentMessaging.getMsgBox(agentId, messageClassType);
             }
 
             @Override
-            public boolean sendToGroup(Message msg, String groupId, String agentId) {
-                return AgentMessaging.getMsgBox(agentId, Message.class).sendToGroup(msg, groupId);
+            public boolean sendToGroup(RoomPropositionMessage msg, String groupId, String agentId) {
+                return AgentMessaging.getMsgBox(agentId, RoomPropositionMessage.class).sendToGroup(msg, groupId);
             }
         };
     }

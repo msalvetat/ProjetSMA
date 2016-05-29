@@ -1,35 +1,33 @@
 package m2dl.jlm.projetsma.agent.impl.student;
 
-import java.util.Iterator;
+import java.util.List;
 
 import fr.irit.smac.libs.tooling.messaging.IMsgBox;
 import fr.irit.smac.libs.tooling.scheduling.contrib.twosteps.ITwoStepsAgent;
-import m2dl.jlm.projetsma.agent.impl.room.knowledge.IKnowledgeRoom;
+import m2dl.jlm.projetsma.Const;
 import m2dl.jlm.projetsma.agent.impl.student.knowledge.IKnowledgeStudent;
 import m2dl.jlm.projetsma.services.IMessagingService;
+import m2dl.jlm.projetsma.services.impl.message.AbstractMessage;
+import m2dl.jlm.projetsma.services.impl.message.EMessageType;
+import m2dl.jlm.projetsma.services.impl.message.InformStudentMessage;
 
 public class Student implements ITwoStepsAgent {
 
     private IKnowledgeStudent        knowledge;
-    private String            id;
-    private IMessagingService messagingService;
-    private IMsgBox           msgBox;
+    private String                   id;
+    private IMsgBox<AbstractMessage> msgBox;
+    private List<AbstractMessage>    messages;
 
     public Student(String id, IKnowledgeStudent knowledge, IMessagingService messagingService) {
         this.id = id;
         this.knowledge = knowledge;
-        this.messagingService = messagingService;
-        this.msgBox = messagingService.getMsgBox(this.id, String.class);
-//        knowledge.getEtudiants().add(this);
+        this.msgBox = messagingService.getMsgBox(this.id, AbstractMessage.class);
+        this.msgBox.subscribeToGroup(Const.STUDENT_GROUP);
     }
 
     public void perceive() {
-        Iterator messagesIt = this.msgBox.getMsgs().iterator();
-        // Read messages
-        while (messagesIt.hasNext()) {
-            String msg = (String) messagesIt.next();
-            System.out.println(msg);
-        }
+
+        messages = msgBox.getMsgs();
     }
 
     public IKnowledgeStudent getKnowledge() {
@@ -38,6 +36,13 @@ public class Student implements ITwoStepsAgent {
 
     public void decideAndAct() {
 
+        for (AbstractMessage m : messages) {
+
+            if (m.getMessageType() == EMessageType.INFORM_STUDENT_MESSAGE) {
+                InformStudentMessage message = (InformStudentMessage) m;
+                System.out.println(message.getRoomId() + " " + message.getTeacherId());
+            }
+        }
     }
 
     public String getId() {
