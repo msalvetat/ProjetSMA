@@ -1,14 +1,18 @@
 package sma.ecoAgents;
 
 import m2dl.jlm.projetsma.agent.ICreateAgent;
-import m2dl.jlm.projetsma.agent.knowledge.IKnowledge;
+import m2dl.jlm.projetsma.agent.impl.room.knowledge.IKnowledgeRoom;
+import m2dl.jlm.projetsma.agent.impl.student.knowledge.IKnowledgeStudent;
+import m2dl.jlm.projetsma.agent.impl.teacher.knowledge.IKnowledgeTeacher;
 import m2dl.jlm.projetsma.environment.IEnvironment;
 import m2dl.jlm.projetsma.services.IMessagingService;
 import m2dl.jlm.projetsma.services.ISchedulingService;
 import sma.agent.EcoRoom;
 import sma.agent.EcoStudent;
 import sma.agent.EcoTeacher;
-import sma.ecoKnowledge.EcoKnowledge;
+import sma.ecoKnowledgeRoom.EcoKnowledgeRoom;
+import sma.ecoKnowledgeStudent.EcoKnowledgeStudent;
+import sma.ecoKnowledgeTeacher.EcoKnowledgeTeacher;
 
 @SuppressWarnings("all")
 public abstract class EcoAgents {
@@ -49,7 +53,21 @@ public abstract class EcoAgents {
      * It will be initialized after the required ports are initialized and before the provided ports are initialized.
      * 
      */
-    public EcoKnowledge.Component ecoKnowledge();
+    public EcoKnowledgeRoom.Component ecoKnowledgeRoom();
+    
+    /**
+     * This can be called by the implementation to access the part and its provided ports.
+     * It will be initialized after the required ports are initialized and before the provided ports are initialized.
+     * 
+     */
+    public EcoKnowledgeTeacher.Component ecoKnowledgeTeacher();
+    
+    /**
+     * This can be called by the implementation to access the part and its provided ports.
+     * It will be initialized after the required ports are initialized and before the provided ports are initialized.
+     * 
+     */
+    public EcoKnowledgeStudent.Component ecoKnowledgeStudent();
     
     /**
      * This can be called by the implementation to access the part and its provided ports.
@@ -79,8 +97,12 @@ public abstract class EcoAgents {
     private final EcoAgents implementation;
     
     public void start() {
-      assert this.ecoKnowledge != null: "This is a bug.";
-      ((EcoKnowledge.ComponentImpl) this.ecoKnowledge).start();
+      assert this.ecoKnowledgeRoom != null: "This is a bug.";
+      ((EcoKnowledgeRoom.ComponentImpl) this.ecoKnowledgeRoom).start();
+      assert this.ecoKnowledgeTeacher != null: "This is a bug.";
+      ((EcoKnowledgeTeacher.ComponentImpl) this.ecoKnowledgeTeacher).start();
+      assert this.ecoKnowledgeStudent != null: "This is a bug.";
+      ((EcoKnowledgeStudent.ComponentImpl) this.ecoKnowledgeStudent).start();
       assert this.ecoTeacher != null: "This is a bug.";
       ((EcoTeacher.ComponentImpl) this.ecoTeacher).start();
       assert this.ecoStudent != null: "This is a bug.";
@@ -91,14 +113,36 @@ public abstract class EcoAgents {
       this.implementation.started = true;
     }
     
-    private void init_ecoKnowledge() {
-      assert this.ecoKnowledge == null: "This is a bug.";
-      assert this.implem_ecoKnowledge == null: "This is a bug.";
-      this.implem_ecoKnowledge = this.implementation.make_ecoKnowledge();
-      if (this.implem_ecoKnowledge == null) {
-      	throw new RuntimeException("make_ecoKnowledge() in sma.ecoAgents.EcoAgents should not return null.");
+    private void init_ecoKnowledgeRoom() {
+      assert this.ecoKnowledgeRoom == null: "This is a bug.";
+      assert this.implem_ecoKnowledgeRoom == null: "This is a bug.";
+      this.implem_ecoKnowledgeRoom = this.implementation.make_ecoKnowledgeRoom();
+      if (this.implem_ecoKnowledgeRoom == null) {
+      	throw new RuntimeException("make_ecoKnowledgeRoom() in sma.ecoAgents.EcoAgents should not return null.");
       }
-      this.ecoKnowledge = this.implem_ecoKnowledge._newComponent(new BridgeImpl_ecoKnowledge(), false);
+      this.ecoKnowledgeRoom = this.implem_ecoKnowledgeRoom._newComponent(new BridgeImpl_ecoKnowledgeRoom(), false);
+      
+    }
+    
+    private void init_ecoKnowledgeTeacher() {
+      assert this.ecoKnowledgeTeacher == null: "This is a bug.";
+      assert this.implem_ecoKnowledgeTeacher == null: "This is a bug.";
+      this.implem_ecoKnowledgeTeacher = this.implementation.make_ecoKnowledgeTeacher();
+      if (this.implem_ecoKnowledgeTeacher == null) {
+      	throw new RuntimeException("make_ecoKnowledgeTeacher() in sma.ecoAgents.EcoAgents should not return null.");
+      }
+      this.ecoKnowledgeTeacher = this.implem_ecoKnowledgeTeacher._newComponent(new BridgeImpl_ecoKnowledgeTeacher(), false);
+      
+    }
+    
+    private void init_ecoKnowledgeStudent() {
+      assert this.ecoKnowledgeStudent == null: "This is a bug.";
+      assert this.implem_ecoKnowledgeStudent == null: "This is a bug.";
+      this.implem_ecoKnowledgeStudent = this.implementation.make_ecoKnowledgeStudent();
+      if (this.implem_ecoKnowledgeStudent == null) {
+      	throw new RuntimeException("make_ecoKnowledgeStudent() in sma.ecoAgents.EcoAgents should not return null.");
+      }
+      this.ecoKnowledgeStudent = this.implem_ecoKnowledgeStudent._newComponent(new BridgeImpl_ecoKnowledgeStudent(), false);
       
     }
     
@@ -136,7 +180,9 @@ public abstract class EcoAgents {
     }
     
     protected void initParts() {
-      init_ecoKnowledge();
+      init_ecoKnowledgeRoom();
+      init_ecoKnowledgeTeacher();
+      init_ecoKnowledgeStudent();
       init_ecoTeacher();
       init_ecoStudent();
       init_ecoRoom();
@@ -176,18 +222,37 @@ public abstract class EcoAgents {
       return this.createAgent;
     }
     
-    private EcoKnowledge.Component ecoKnowledge;
+    private EcoKnowledgeRoom.Component ecoKnowledgeRoom;
     
-    private EcoKnowledge implem_ecoKnowledge;
+    private EcoKnowledgeRoom implem_ecoKnowledgeRoom;
     
-    private final class BridgeImpl_ecoKnowledge implements EcoKnowledge.Requires {
-      public final IEnvironment environment() {
-        return EcoAgents.ComponentImpl.this.bridge.environment();
-      }
+    private final class BridgeImpl_ecoKnowledgeRoom implements EcoKnowledgeRoom.Requires {
     }
     
-    public final EcoKnowledge.Component ecoKnowledge() {
-      return this.ecoKnowledge;
+    public final EcoKnowledgeRoom.Component ecoKnowledgeRoom() {
+      return this.ecoKnowledgeRoom;
+    }
+    
+    private EcoKnowledgeTeacher.Component ecoKnowledgeTeacher;
+    
+    private EcoKnowledgeTeacher implem_ecoKnowledgeTeacher;
+    
+    private final class BridgeImpl_ecoKnowledgeTeacher implements EcoKnowledgeTeacher.Requires {
+    }
+    
+    public final EcoKnowledgeTeacher.Component ecoKnowledgeTeacher() {
+      return this.ecoKnowledgeTeacher;
+    }
+    
+    private EcoKnowledgeStudent.Component ecoKnowledgeStudent;
+    
+    private EcoKnowledgeStudent implem_ecoKnowledgeStudent;
+    
+    private final class BridgeImpl_ecoKnowledgeStudent implements EcoKnowledgeStudent.Requires {
+    }
+    
+    public final EcoKnowledgeStudent.Component ecoKnowledgeStudent() {
+      return this.ecoKnowledgeStudent;
     }
     
     private EcoTeacher.Component ecoTeacher;
@@ -261,7 +326,7 @@ public abstract class EcoAgents {
        * It will be initialized after the required ports are initialized and before the provided ports are initialized.
        * 
        */
-      public EcoKnowledge.KnowledgeS.Component knowledgeS();
+      public EcoKnowledgeTeacher.KnowledgeTeacherS.Component knowledgeS();
       
       /**
        * This can be called by the implementation to access the part and its provided ports.
@@ -278,7 +343,7 @@ public abstract class EcoAgents {
       
       public void start() {
         assert this.knowledgeS != null: "This is a bug.";
-        ((EcoKnowledge.KnowledgeS.ComponentImpl) this.knowledgeS).start();
+        ((EcoKnowledgeTeacher.KnowledgeTeacherS.ComponentImpl) this.knowledgeS).start();
         assert this.teacherS != null: "This is a bug.";
         ((EcoTeacher.TeacherS.ComponentImpl) this.teacherS).start();
         this.implementation.start();
@@ -288,7 +353,7 @@ public abstract class EcoAgents {
       private void init_knowledgeS() {
         assert this.knowledgeS == null: "This is a bug.";
         assert this.implementation.use_knowledgeS != null: "This is a bug.";
-        this.knowledgeS = this.implementation.use_knowledgeS._newComponent(new BridgeImpl_ecoKnowledge_knowledgeS(), false);
+        this.knowledgeS = this.implementation.use_knowledgeS._newComponent(new BridgeImpl_ecoKnowledgeTeacher_knowledgeS(), false);
         
       }
       
@@ -324,19 +389,19 @@ public abstract class EcoAgents {
         }
       }
       
-      private EcoKnowledge.KnowledgeS.Component knowledgeS;
+      private EcoKnowledgeTeacher.KnowledgeTeacherS.Component knowledgeS;
       
-      private final class BridgeImpl_ecoKnowledge_knowledgeS implements EcoKnowledge.KnowledgeS.Requires {
+      private final class BridgeImpl_ecoKnowledgeTeacher_knowledgeS implements EcoKnowledgeTeacher.KnowledgeTeacherS.Requires {
       }
       
-      public final EcoKnowledge.KnowledgeS.Component knowledgeS() {
+      public final EcoKnowledgeTeacher.KnowledgeTeacherS.Component knowledgeS() {
         return this.knowledgeS;
       }
       
       private EcoTeacher.TeacherS.Component teacherS;
       
       private final class BridgeImpl_ecoTeacher_teacherS implements EcoTeacher.TeacherS.Requires {
-        public final IKnowledge knowledge() {
+        public final IKnowledgeTeacher knowledge() {
           return EcoAgents.TeacherAgent.ComponentImpl.this.knowledgeS().knowledge();
         }
       }
@@ -409,7 +474,7 @@ public abstract class EcoAgents {
       return this.selfComponent;
     }
     
-    private EcoKnowledge.KnowledgeS use_knowledgeS;
+    private EcoKnowledgeTeacher.KnowledgeTeacherS use_knowledgeS;
     
     private EcoTeacher.TeacherS use_teacherS;
     
@@ -475,7 +540,7 @@ public abstract class EcoAgents {
        * It will be initialized after the required ports are initialized and before the provided ports are initialized.
        * 
        */
-      public EcoKnowledge.KnowledgeS.Component knowledgeS();
+      public EcoKnowledgeStudent.KnowledgeStudentS.Component knowledgeS();
       
       /**
        * This can be called by the implementation to access the part and its provided ports.
@@ -492,7 +557,7 @@ public abstract class EcoAgents {
       
       public void start() {
         assert this.knowledgeS != null: "This is a bug.";
-        ((EcoKnowledge.KnowledgeS.ComponentImpl) this.knowledgeS).start();
+        ((EcoKnowledgeStudent.KnowledgeStudentS.ComponentImpl) this.knowledgeS).start();
         assert this.studentS != null: "This is a bug.";
         ((EcoStudent.StudentS.ComponentImpl) this.studentS).start();
         this.implementation.start();
@@ -502,7 +567,7 @@ public abstract class EcoAgents {
       private void init_knowledgeS() {
         assert this.knowledgeS == null: "This is a bug.";
         assert this.implementation.use_knowledgeS != null: "This is a bug.";
-        this.knowledgeS = this.implementation.use_knowledgeS._newComponent(new BridgeImpl_ecoKnowledge_knowledgeS(), false);
+        this.knowledgeS = this.implementation.use_knowledgeS._newComponent(new BridgeImpl_ecoKnowledgeStudent_knowledgeS(), false);
         
       }
       
@@ -538,19 +603,19 @@ public abstract class EcoAgents {
         }
       }
       
-      private EcoKnowledge.KnowledgeS.Component knowledgeS;
+      private EcoKnowledgeStudent.KnowledgeStudentS.Component knowledgeS;
       
-      private final class BridgeImpl_ecoKnowledge_knowledgeS implements EcoKnowledge.KnowledgeS.Requires {
+      private final class BridgeImpl_ecoKnowledgeStudent_knowledgeS implements EcoKnowledgeStudent.KnowledgeStudentS.Requires {
       }
       
-      public final EcoKnowledge.KnowledgeS.Component knowledgeS() {
+      public final EcoKnowledgeStudent.KnowledgeStudentS.Component knowledgeS() {
         return this.knowledgeS;
       }
       
       private EcoStudent.StudentS.Component studentS;
       
       private final class BridgeImpl_ecoStudent_studentS implements EcoStudent.StudentS.Requires {
-        public final IKnowledge knowledge() {
+        public final IKnowledgeStudent knowledge() {
           return EcoAgents.StudentAgent.ComponentImpl.this.knowledgeS().knowledge();
         }
       }
@@ -623,7 +688,7 @@ public abstract class EcoAgents {
       return this.selfComponent;
     }
     
-    private EcoKnowledge.KnowledgeS use_knowledgeS;
+    private EcoKnowledgeStudent.KnowledgeStudentS use_knowledgeS;
     
     private EcoStudent.StudentS use_studentS;
     
@@ -689,7 +754,7 @@ public abstract class EcoAgents {
        * It will be initialized after the required ports are initialized and before the provided ports are initialized.
        * 
        */
-      public EcoKnowledge.KnowledgeS.Component knowledgeS();
+      public EcoKnowledgeRoom.KnowledgeRoomS.Component knowledgeS();
       
       /**
        * This can be called by the implementation to access the part and its provided ports.
@@ -706,7 +771,7 @@ public abstract class EcoAgents {
       
       public void start() {
         assert this.knowledgeS != null: "This is a bug.";
-        ((EcoKnowledge.KnowledgeS.ComponentImpl) this.knowledgeS).start();
+        ((EcoKnowledgeRoom.KnowledgeRoomS.ComponentImpl) this.knowledgeS).start();
         assert this.roomS != null: "This is a bug.";
         ((EcoRoom.RoomS.ComponentImpl) this.roomS).start();
         this.implementation.start();
@@ -716,7 +781,7 @@ public abstract class EcoAgents {
       private void init_knowledgeS() {
         assert this.knowledgeS == null: "This is a bug.";
         assert this.implementation.use_knowledgeS != null: "This is a bug.";
-        this.knowledgeS = this.implementation.use_knowledgeS._newComponent(new BridgeImpl_ecoKnowledge_knowledgeS(), false);
+        this.knowledgeS = this.implementation.use_knowledgeS._newComponent(new BridgeImpl_ecoKnowledgeRoom_knowledgeS(), false);
         
       }
       
@@ -752,19 +817,19 @@ public abstract class EcoAgents {
         }
       }
       
-      private EcoKnowledge.KnowledgeS.Component knowledgeS;
+      private EcoKnowledgeRoom.KnowledgeRoomS.Component knowledgeS;
       
-      private final class BridgeImpl_ecoKnowledge_knowledgeS implements EcoKnowledge.KnowledgeS.Requires {
+      private final class BridgeImpl_ecoKnowledgeRoom_knowledgeS implements EcoKnowledgeRoom.KnowledgeRoomS.Requires {
       }
       
-      public final EcoKnowledge.KnowledgeS.Component knowledgeS() {
+      public final EcoKnowledgeRoom.KnowledgeRoomS.Component knowledgeS() {
         return this.knowledgeS;
       }
       
       private EcoRoom.RoomS.Component roomS;
       
       private final class BridgeImpl_ecoRoom_roomS implements EcoRoom.RoomS.Requires {
-        public final IKnowledge knowledge() {
+        public final IKnowledgeRoom knowledge() {
           return EcoAgents.RoomAgent.ComponentImpl.this.knowledgeS().knowledge();
         }
       }
@@ -837,7 +902,7 @@ public abstract class EcoAgents {
       return this.selfComponent;
     }
     
-    private EcoKnowledge.KnowledgeS use_knowledgeS;
+    private EcoKnowledgeRoom.KnowledgeRoomS use_knowledgeS;
     
     private EcoRoom.RoomS use_roomS;
     
@@ -962,7 +1027,21 @@ public abstract class EcoAgents {
    * This will be called once during the construction of the component to initialize this sub-component.
    * 
    */
-  protected abstract EcoKnowledge make_ecoKnowledge();
+  protected abstract EcoKnowledgeRoom make_ecoKnowledgeRoom();
+  
+  /**
+   * This should be overridden by the implementation to define how to create this sub-component.
+   * This will be called once during the construction of the component to initialize this sub-component.
+   * 
+   */
+  protected abstract EcoKnowledgeTeacher make_ecoKnowledgeTeacher();
+  
+  /**
+   * This should be overridden by the implementation to define how to create this sub-component.
+   * This will be called once during the construction of the component to initialize this sub-component.
+   * 
+   */
+  protected abstract EcoKnowledgeStudent make_ecoKnowledgeStudent();
   
   /**
    * This should be overridden by the implementation to define how to create this sub-component.
@@ -1021,9 +1100,9 @@ public abstract class EcoAgents {
     assert implem.ecosystemComponent == null: "This is a bug.";
     assert this.selfComponent != null: "This is a bug.";
     implem.ecosystemComponent = this.selfComponent;
-    assert this.selfComponent.implem_ecoKnowledge != null: "This is a bug.";
+    assert this.selfComponent.implem_ecoKnowledgeTeacher != null: "This is a bug.";
     assert implem.use_knowledgeS == null: "This is a bug.";
-    implem.use_knowledgeS = this.selfComponent.implem_ecoKnowledge._createImplementationOfKnowledgeS(id);
+    implem.use_knowledgeS = this.selfComponent.implem_ecoKnowledgeTeacher._createImplementationOfKnowledgeTeacherS(id);
     assert this.selfComponent.implem_ecoTeacher != null: "This is a bug.";
     assert implem.use_teacherS == null: "This is a bug.";
     implem.use_teacherS = this.selfComponent.implem_ecoTeacher._createImplementationOfTeacherS(id);
@@ -1059,9 +1138,9 @@ public abstract class EcoAgents {
     assert implem.ecosystemComponent == null: "This is a bug.";
     assert this.selfComponent != null: "This is a bug.";
     implem.ecosystemComponent = this.selfComponent;
-    assert this.selfComponent.implem_ecoKnowledge != null: "This is a bug.";
+    assert this.selfComponent.implem_ecoKnowledgeStudent != null: "This is a bug.";
     assert implem.use_knowledgeS == null: "This is a bug.";
-    implem.use_knowledgeS = this.selfComponent.implem_ecoKnowledge._createImplementationOfKnowledgeS(id);
+    implem.use_knowledgeS = this.selfComponent.implem_ecoKnowledgeStudent._createImplementationOfKnowledgeStudentS(id);
     assert this.selfComponent.implem_ecoStudent != null: "This is a bug.";
     assert implem.use_studentS == null: "This is a bug.";
     implem.use_studentS = this.selfComponent.implem_ecoStudent._createImplementationOfStudentS(id);
@@ -1097,9 +1176,9 @@ public abstract class EcoAgents {
     assert implem.ecosystemComponent == null: "This is a bug.";
     assert this.selfComponent != null: "This is a bug.";
     implem.ecosystemComponent = this.selfComponent;
-    assert this.selfComponent.implem_ecoKnowledge != null: "This is a bug.";
+    assert this.selfComponent.implem_ecoKnowledgeRoom != null: "This is a bug.";
     assert implem.use_knowledgeS == null: "This is a bug.";
-    implem.use_knowledgeS = this.selfComponent.implem_ecoKnowledge._createImplementationOfKnowledgeS(id);
+    implem.use_knowledgeS = this.selfComponent.implem_ecoKnowledgeRoom._createImplementationOfKnowledgeRoomS(id);
     assert this.selfComponent.implem_ecoRoom != null: "This is a bug.";
     assert implem.use_roomS == null: "This is a bug.";
     implem.use_roomS = this.selfComponent.implem_ecoRoom._createImplementationOfRoomS(id);

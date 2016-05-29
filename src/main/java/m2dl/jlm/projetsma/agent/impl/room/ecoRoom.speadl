@@ -1,5 +1,5 @@
 import fr.irit.smac.libs.tooling.scheduling.contrib.twosteps.ITwoStepsAgent
-import m2dl.jlm.projetsma.agent.knowledge.IKnowledge
+import m2dl.jlm.projetsma.agent.impl.room.knowledge.IKnowledgeRoom
 import m2dl.jlm.projetsma.services.IMessagingService
 import m2dl.jlm.projetsma.services.ISchedulingService
 
@@ -9,7 +9,7 @@ namespace sma.agent {
 
 		species RoomS(id: String) {
 			provides room: ITwoStepsAgent
-			requires knowledge: IKnowledge
+			requires knowledge: IKnowledgeRoom
 		}
 
 		requires strategyService: ISchedulingService

@@ -1,25 +1,23 @@
 package m2dl.jlm.projetsma.agent.impl.teacher;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.List;
 
 import fr.irit.smac.libs.tooling.messaging.IMsgBox;
 import fr.irit.smac.libs.tooling.scheduling.contrib.twosteps.ITwoStepsAgent;
-import m2dl.jlm.projetsma.agent.impl.student.Student;
-import m2dl.jlm.projetsma.agent.knowledge.IKnowledge;
-import m2dl.jlm.projetsma.environment.impl.Room;
+import m2dl.jlm.projetsma.agent.impl.teacher.knowledge.IKnowledgeTeacher;
 import m2dl.jlm.projetsma.services.IMessagingService;
+import m2dl.jlm.projetsma.services.impl.Message;
 
 public class Teacher implements ITwoStepsAgent {
 
-    private IKnowledge        knowledge;
+    private IKnowledgeTeacher        knowledge;
     private String            id;
     private IMessagingService messagingService;
-    private IMsgBox           msgBox;
+    private IMsgBox<Message>  msgBox;
+    private String            room;
+    private List<Message>     messages;
 
-    public Teacher(String id, IKnowledge knowledge, IMessagingService messagingService) {
+    public Teacher(String id, IKnowledgeTeacher knowledge, IMessagingService messagingService) {
         this.id = id;
         this.knowledge = knowledge;
         this.messagingService = messagingService;
@@ -28,45 +26,32 @@ public class Teacher implements ITwoStepsAgent {
 
     public void perceive() {
 
-        HashSet<Room> rooms = (HashSet<Room>) this.knowledge.getRooms();
-        HashMap<Room, Teacher> allocationsTeacherRoom = (HashMap<Room, Teacher>) this.knowledge
-            .getAllocationsTeacherRoom();
+        messages = msgBox.getMsgs();
     }
 
-    public IKnowledge getKnowledge() {
+    public IKnowledgeTeacher getKnowledge() {
         return knowledge;
     }
 
     public void decideAndAct() {
-        boolean hasDecided = false;
-        Set<Room> rooms = this.knowledge.getRooms();
-        Iterator<Room> iterator = rooms.iterator();
-        Room room;
-        HashMap<Room, Teacher> allocationsTeacherRoom = (HashMap<Room, Teacher>) this.knowledge
-            .getAllocationsTeacherRoom();
-        while (iterator.hasNext() && !hasDecided) {
-            room = iterator.next();
 
-            // Decide : we decide the room we can take
-            if (roomIsFree(room, allocationsTeacherRoom) &&
-                teacherHasNotRoomAlreadyBooked(allocationsTeacherRoom)) {
+        if (!messages.isEmpty()) {
+            for (Message m : messages) {
 
-                // Act : booking the room
-                allocationsTeacherRoom.put(room, this);
-                hasDecided = true;
-                for (Student etudiant : this.knowledge.getEtudiants()) {
-                    this.msgBox.send("Class in room " + room.getName(), etudiant.getId());
+                if (m.getRoom().getKnowledge().isFree()) {
+                    room = m.getMessage();
+                    m.getRoom().getKnowledge().setFree(false);
+                    this.knowledge.setLookingForRoom(false);
+                    System.out.println(id + " " + room);
+                    break;
                 }
             }
+
         }
-    }
 
-    private boolean roomIsFree(Room room, HashMap<Room, Teacher> allocationsTeacherRoom) {
-        return !allocationsTeacherRoom.containsKey(room);
-    }
-
-    private boolean teacherHasNotRoomAlreadyBooked(HashMap<Room, Teacher> allocationsTeacherRoom) {
-        return !allocationsTeacherRoom.containsValue(this);
+        if (this.knowledge.isLookingForRooms()) {
+            msgBox.sendToGroup(new Message(id), "room");
+        }
     }
 
     public String getId() {

@@ -6,4 +6,5 @@ public interface ICreateAgent {
 
     public void createStudentAgent(String id);
 
+    public void createRoomAgent(String id);
 }

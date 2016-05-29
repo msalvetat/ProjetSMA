@@ -1,27 +1,13 @@
-package sma.agent;
+package sma.ecoKnowledgeTeacher;
 
-import fr.irit.smac.libs.tooling.scheduling.contrib.twosteps.ITwoStepsAgent;
 import m2dl.jlm.projetsma.agent.impl.teacher.knowledge.IKnowledgeTeacher;
-import m2dl.jlm.projetsma.services.IMessagingService;
-import m2dl.jlm.projetsma.services.ISchedulingService;
 
 @SuppressWarnings("all")
-public abstract class EcoTeacher {
+public abstract class EcoKnowledgeTeacher {
   public interface Requires {
-    /**
-     * This can be called by the implementation to access this required port.
-     * 
-     */
-    public ISchedulingService strategyService();
-    
-    /**
-     * This can be called by the implementation to access this required port.
-     * 
-     */
-    public IMessagingService messagingService();
   }
   
-  public interface Component extends EcoTeacher.Provides {
+  public interface Component extends EcoKnowledgeTeacher.Provides {
   }
   
   public interface Provides {
@@ -30,10 +16,10 @@ public abstract class EcoTeacher {
   public interface Parts {
   }
   
-  public static class ComponentImpl implements EcoTeacher.Component, EcoTeacher.Parts {
-    private final EcoTeacher.Requires bridge;
+  public static class ComponentImpl implements EcoKnowledgeTeacher.Component, EcoKnowledgeTeacher.Parts {
+    private final EcoKnowledgeTeacher.Requires bridge;
     
-    private final EcoTeacher implementation;
+    private final EcoKnowledgeTeacher implementation;
     
     public void start() {
       this.implementation.start();
@@ -48,7 +34,7 @@ public abstract class EcoTeacher {
       
     }
     
-    public ComponentImpl(final EcoTeacher implem, final EcoTeacher.Requires b, final boolean doInits) {
+    public ComponentImpl(final EcoKnowledgeTeacher implem, final EcoKnowledgeTeacher.Requires b, final boolean doInits) {
       this.bridge = b;
       this.implementation = implem;
       
@@ -65,16 +51,11 @@ public abstract class EcoTeacher {
     }
   }
   
-  public static abstract class TeacherS {
+  public static abstract class KnowledgeTeacherS {
     public interface Requires {
-      /**
-       * This can be called by the implementation to access this required port.
-       * 
-       */
-      public IKnowledgeTeacher knowledge();
     }
     
-    public interface Component extends EcoTeacher.TeacherS.Provides {
+    public interface Component extends EcoKnowledgeTeacher.KnowledgeTeacherS.Provides {
     }
     
     public interface Provides {
@@ -82,16 +63,16 @@ public abstract class EcoTeacher {
        * This can be called to access the provided port.
        * 
        */
-      public ITwoStepsAgent teacher();
+      public IKnowledgeTeacher knowledge();
     }
     
     public interface Parts {
     }
     
-    public static class ComponentImpl implements EcoTeacher.TeacherS.Component, EcoTeacher.TeacherS.Parts {
-      private final EcoTeacher.TeacherS.Requires bridge;
+    public static class ComponentImpl implements EcoKnowledgeTeacher.KnowledgeTeacherS.Component, EcoKnowledgeTeacher.KnowledgeTeacherS.Parts {
+      private final EcoKnowledgeTeacher.KnowledgeTeacherS.Requires bridge;
       
-      private final EcoTeacher.TeacherS implementation;
+      private final EcoKnowledgeTeacher.KnowledgeTeacherS implementation;
       
       public void start() {
         this.implementation.start();
@@ -102,19 +83,19 @@ public abstract class EcoTeacher {
         
       }
       
-      private void init_teacher() {
-        assert this.teacher == null: "This is a bug.";
-        this.teacher = this.implementation.make_teacher();
-        if (this.teacher == null) {
-        	throw new RuntimeException("make_teacher() in sma.agent.EcoTeacher$TeacherS should not return null.");
+      private void init_knowledge() {
+        assert this.knowledge == null: "This is a bug.";
+        this.knowledge = this.implementation.make_knowledge();
+        if (this.knowledge == null) {
+        	throw new RuntimeException("make_knowledge() in sma.ecoKnowledgeTeacher.EcoKnowledgeTeacher$KnowledgeTeacherS should not return null.");
         }
       }
       
       protected void initProvidedPorts() {
-        init_teacher();
+        init_knowledge();
       }
       
-      public ComponentImpl(final EcoTeacher.TeacherS implem, final EcoTeacher.TeacherS.Requires b, final boolean doInits) {
+      public ComponentImpl(final EcoKnowledgeTeacher.KnowledgeTeacherS implem, final EcoKnowledgeTeacher.KnowledgeTeacherS.Requires b, final boolean doInits) {
         this.bridge = b;
         this.implementation = implem;
         
@@ -130,10 +111,10 @@ public abstract class EcoTeacher {
         }
       }
       
-      private ITwoStepsAgent teacher;
+      private IKnowledgeTeacher knowledge;
       
-      public ITwoStepsAgent teacher() {
-        return this.teacher;
+      public IKnowledgeTeacher knowledge() {
+        return this.knowledge;
       }
     }
     
@@ -151,7 +132,7 @@ public abstract class EcoTeacher {
      */
     private boolean started = false;;
     
-    private EcoTeacher.TeacherS.ComponentImpl selfComponent;
+    private EcoKnowledgeTeacher.KnowledgeTeacherS.ComponentImpl selfComponent;
     
     /**
      * Can be overridden by the implementation.
@@ -168,7 +149,7 @@ public abstract class EcoTeacher {
      * This can be called by the implementation to access the provided ports.
      * 
      */
-    protected EcoTeacher.TeacherS.Provides provides() {
+    protected EcoKnowledgeTeacher.KnowledgeTeacherS.Provides provides() {
       assert this.selfComponent != null: "This is a bug.";
       if (!this.init) {
       	throw new RuntimeException("provides() can't be accessed until a component has been created from this implementation, use start() instead of the constructor if provides() is needed to initialise the component.");
@@ -181,13 +162,13 @@ public abstract class EcoTeacher {
      * This will be called once during the construction of the component to initialize the port.
      * 
      */
-    protected abstract ITwoStepsAgent make_teacher();
+    protected abstract IKnowledgeTeacher make_knowledge();
     
     /**
      * This can be called by the implementation to access the required ports.
      * 
      */
-    protected EcoTeacher.TeacherS.Requires requires() {
+    protected EcoKnowledgeTeacher.KnowledgeTeacherS.Requires requires() {
       assert this.selfComponent != null: "This is a bug.";
       if (!this.init) {
       	throw new RuntimeException("requires() can't be accessed until a component has been created from this implementation, use start() instead of the constructor if requires() is needed to initialise the component.");
@@ -199,7 +180,7 @@ public abstract class EcoTeacher {
      * This can be called by the implementation to access the parts and their provided ports.
      * 
      */
-    protected EcoTeacher.TeacherS.Parts parts() {
+    protected EcoKnowledgeTeacher.KnowledgeTeacherS.Parts parts() {
       assert this.selfComponent != null: "This is a bug.";
       if (!this.init) {
       	throw new RuntimeException("parts() can't be accessed until a component has been created from this implementation, use start() instead of the constructor if parts() is needed to initialise the component.");
@@ -211,25 +192,25 @@ public abstract class EcoTeacher {
      * Not meant to be used to manually instantiate components (except for testing).
      * 
      */
-    public synchronized EcoTeacher.TeacherS.Component _newComponent(final EcoTeacher.TeacherS.Requires b, final boolean start) {
+    public synchronized EcoKnowledgeTeacher.KnowledgeTeacherS.Component _newComponent(final EcoKnowledgeTeacher.KnowledgeTeacherS.Requires b, final boolean start) {
       if (this.init) {
-      	throw new RuntimeException("This instance of TeacherS has already been used to create a component, use another one.");
+      	throw new RuntimeException("This instance of KnowledgeTeacherS has already been used to create a component, use another one.");
       }
       this.init = true;
-      EcoTeacher.TeacherS.ComponentImpl  _comp = new EcoTeacher.TeacherS.ComponentImpl(this, b, true);
+      EcoKnowledgeTeacher.KnowledgeTeacherS.ComponentImpl  _comp = new EcoKnowledgeTeacher.KnowledgeTeacherS.ComponentImpl(this, b, true);
       if (start) {
       	_comp.start();
       }
       return _comp;
     }
     
-    private EcoTeacher.ComponentImpl ecosystemComponent;
+    private EcoKnowledgeTeacher.ComponentImpl ecosystemComponent;
     
     /**
      * This can be called by the species implementation to access the provided ports of its ecosystem.
      * 
      */
-    protected EcoTeacher.Provides eco_provides() {
+    protected EcoKnowledgeTeacher.Provides eco_provides() {
       assert this.ecosystemComponent != null: "This is a bug.";
       return this.ecosystemComponent;
     }
@@ -238,7 +219,7 @@ public abstract class EcoTeacher {
      * This can be called by the species implementation to access the required ports of its ecosystem.
      * 
      */
-    protected EcoTeacher.Requires eco_requires() {
+    protected EcoKnowledgeTeacher.Requires eco_requires() {
       assert this.ecosystemComponent != null: "This is a bug.";
       return this.ecosystemComponent.bridge;
     }
@@ -247,7 +228,7 @@ public abstract class EcoTeacher {
      * This can be called by the species implementation to access the parts of its ecosystem and their provided ports.
      * 
      */
-    protected EcoTeacher.Parts eco_parts() {
+    protected EcoKnowledgeTeacher.Parts eco_parts() {
       assert this.ecosystemComponent != null: "This is a bug.";
       return this.ecosystemComponent;
     }
@@ -267,7 +248,7 @@ public abstract class EcoTeacher {
    */
   private boolean started = false;;
   
-  private EcoTeacher.ComponentImpl selfComponent;
+  private EcoKnowledgeTeacher.ComponentImpl selfComponent;
   
   /**
    * Can be overridden by the implementation.
@@ -284,7 +265,7 @@ public abstract class EcoTeacher {
    * This can be called by the implementation to access the provided ports.
    * 
    */
-  protected EcoTeacher.Provides provides() {
+  protected EcoKnowledgeTeacher.Provides provides() {
     assert this.selfComponent != null: "This is a bug.";
     if (!this.init) {
     	throw new RuntimeException("provides() can't be accessed until a component has been created from this implementation, use start() instead of the constructor if provides() is needed to initialise the component.");
@@ -296,7 +277,7 @@ public abstract class EcoTeacher {
    * This can be called by the implementation to access the required ports.
    * 
    */
-  protected EcoTeacher.Requires requires() {
+  protected EcoKnowledgeTeacher.Requires requires() {
     assert this.selfComponent != null: "This is a bug.";
     if (!this.init) {
     	throw new RuntimeException("requires() can't be accessed until a component has been created from this implementation, use start() instead of the constructor if requires() is needed to initialise the component.");
@@ -308,7 +289,7 @@ public abstract class EcoTeacher {
    * This can be called by the implementation to access the parts and their provided ports.
    * 
    */
-  protected EcoTeacher.Parts parts() {
+  protected EcoKnowledgeTeacher.Parts parts() {
     assert this.selfComponent != null: "This is a bug.";
     if (!this.init) {
     	throw new RuntimeException("parts() can't be accessed until a component has been created from this implementation, use start() instead of the constructor if parts() is needed to initialise the component.");
@@ -320,12 +301,12 @@ public abstract class EcoTeacher {
    * Not meant to be used to manually instantiate components (except for testing).
    * 
    */
-  public synchronized EcoTeacher.Component _newComponent(final EcoTeacher.Requires b, final boolean start) {
+  public synchronized EcoKnowledgeTeacher.Component _newComponent(final EcoKnowledgeTeacher.Requires b, final boolean start) {
     if (this.init) {
-    	throw new RuntimeException("This instance of EcoTeacher has already been used to create a component, use another one.");
+    	throw new RuntimeException("This instance of EcoKnowledgeTeacher has already been used to create a component, use another one.");
     }
     this.init = true;
-    EcoTeacher.ComponentImpl  _comp = new EcoTeacher.ComponentImpl(this, b, true);
+    EcoKnowledgeTeacher.ComponentImpl  _comp = new EcoKnowledgeTeacher.ComponentImpl(this, b, true);
     if (start) {
     	_comp.start();
     }
@@ -336,20 +317,37 @@ public abstract class EcoTeacher {
    * This should be overridden by the implementation to instantiate the implementation of the species.
    * 
    */
-  protected abstract EcoTeacher.TeacherS make_TeacherS(final String id);
+  protected abstract EcoKnowledgeTeacher.KnowledgeTeacherS make_KnowledgeTeacherS(final String id);
   
   /**
    * Do not call, used by generated code.
    * 
    */
-  public EcoTeacher.TeacherS _createImplementationOfTeacherS(final String id) {
-    EcoTeacher.TeacherS implem = make_TeacherS(id);
+  public EcoKnowledgeTeacher.KnowledgeTeacherS _createImplementationOfKnowledgeTeacherS(final String id) {
+    EcoKnowledgeTeacher.KnowledgeTeacherS implem = make_KnowledgeTeacherS(id);
     if (implem == null) {
-    	throw new RuntimeException("make_TeacherS() in sma.agent.EcoTeacher should not return null.");
+    	throw new RuntimeException("make_KnowledgeTeacherS() in sma.ecoKnowledgeTeacher.EcoKnowledgeTeacher should not return null.");
     }
     assert implem.ecosystemComponent == null: "This is a bug.";
     assert this.selfComponent != null: "This is a bug.";
     implem.ecosystemComponent = this.selfComponent;
     return implem;
+  }
+  
+  /**
+   * This can be called to create an instance of the species from inside the implementation of the ecosystem.
+   * 
+   */
+  protected EcoKnowledgeTeacher.KnowledgeTeacherS.Component newKnowledgeTeacherS(final String id) {
+    EcoKnowledgeTeacher.KnowledgeTeacherS _implem = _createImplementationOfKnowledgeTeacherS(id);
+    return _implem._newComponent(new EcoKnowledgeTeacher.KnowledgeTeacherS.Requires() {},true);
+  }
+  
+  /**
+   * Use to instantiate a component from this implementation.
+   * 
+   */
+  public EcoKnowledgeTeacher.Component newComponent() {
+    return this._newComponent(new EcoKnowledgeTeacher.Requires() {}, true);
   }
 }

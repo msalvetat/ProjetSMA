@@ -1,7 +1,7 @@
 package sma.agent;
 
 import fr.irit.smac.libs.tooling.scheduling.contrib.twosteps.ITwoStepsAgent;
-import m2dl.jlm.projetsma.agent.knowledge.IKnowledge;
+import m2dl.jlm.projetsma.agent.impl.student.knowledge.IKnowledgeStudent;
 import m2dl.jlm.projetsma.services.IMessagingService;
 import m2dl.jlm.projetsma.services.ISchedulingService;
 
@@ -71,7 +71,7 @@ public abstract class EcoStudent {
        * This can be called by the implementation to access this required port.
        * 
        */
-      public IKnowledge knowledge();
+      public IKnowledgeStudent knowledge();
     }
     
     public interface Component extends EcoStudent.StudentS.Provides {

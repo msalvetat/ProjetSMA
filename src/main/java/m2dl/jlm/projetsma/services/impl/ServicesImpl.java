@@ -19,7 +19,7 @@ public class ServicesImpl extends Services {
     protected void start() {
         provides().systemStrategy().init();
     }
-    
+
     @Override
     protected ISchedulingService make_systemStrategy() {
         return new ISchedulingService() {
@@ -44,7 +44,7 @@ public class ServicesImpl extends Services {
 
             @Override
             public void shutdown() {
-                this.twoStepsSystemStrategy.shutdown();                
+                this.twoStepsSystemStrategy.shutdown();
             }
 
             @Override
@@ -61,6 +61,11 @@ public class ServicesImpl extends Services {
             @Override
             public IMsgBox getMsgBox(String agentId, Class<?> messageClassType) {
                 return AgentMessaging.getMsgBox(agentId, messageClassType);
+            }
+
+            @Override
+            public boolean sendToGroup(Message msg, String groupId, String agentId) {
+                return AgentMessaging.getMsgBox(agentId, Message.class).sendToGroup(msg, groupId);
             }
         };
     }

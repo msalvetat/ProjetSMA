@@ -1,0 +1,11 @@
+import m2dl.jlm.projetsma.agent.impl.room.knowledge.IKnowledgeRoom
+
+namespace sma.ecoKnowledgeRoom {
+
+	ecosystem EcoKnowledgeRoom {
+
+		species KnowledgeRoomS(id: String) {
+			provides knowledge: IKnowledgeRoom
+		}
+	}
+}

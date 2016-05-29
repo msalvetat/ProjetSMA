@@ -29,6 +29,5 @@ class SmaComponentsTest extends Specification {
 
         then:
         IEnvironment environment = sma.environmentService()
-        environment.getRooms().size() == 3
     }
 }

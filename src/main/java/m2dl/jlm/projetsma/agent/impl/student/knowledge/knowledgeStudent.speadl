@@ -1,0 +1,11 @@
+import m2dl.jlm.projetsma.agent.impl.student.knowledge.IKnowledgeStudent
+
+namespace sma.ecoKnowledgeStudent {
+
+	ecosystem EcoKnowledgeStudent {
+
+		species KnowledgeStudentS(id: String) {
+			provides knowledge: IKnowledgeStudent
+		}
+	}
+}

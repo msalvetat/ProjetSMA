@@ -5,7 +5,9 @@ import m2dl.jlm.projetsma.services.ISchedulingService
 import sma.agent.EcoRoom
 import sma.agent.EcoStudent
 import sma.agent.EcoTeacher
-import sma.ecoKnowledge.EcoKnowledge
+import sma.ecoKnowledgeRoom.EcoKnowledgeRoom
+import sma.ecoKnowledgeStudent.EcoKnowledgeStudent
+import sma.ecoKnowledgeTeacher.EcoKnowledgeTeacher
 
 namespace sma.ecoAgents {
 
@@ -19,7 +21,7 @@ namespace sma.ecoAgents {
 		// A teacher is composed of a knowledge and his content
 		species TeacherAgent(id: String) {
 
-			use knowledgeS: ecoKnowledge.KnowledgeS(id) {
+			use knowledgeS: ecoKnowledgeTeacher.KnowledgeTeacherS(id) {
 			}
 			use teacherS: ecoTeacher.TeacherS(id) {
 				bind knowledge to knowledgeS.knowledge
@@ -28,7 +30,7 @@ namespace sma.ecoAgents {
 
 		// A student is composed of a knowledge and his content
 		species StudentAgent(id: String) {
-			use knowledgeS: ecoKnowledge.KnowledgeS(id) {
+			use knowledgeS: ecoKnowledgeStudent.KnowledgeStudentS(id) {
 			}
 			use studentS: ecoStudent.StudentS(id) {
 				bind knowledge to knowledgeS.knowledge
@@ -37,7 +39,7 @@ namespace sma.ecoAgents {
 
 		// A room is composed of a knowledge and his content
 		species RoomAgent(id: String) {
-			use knowledgeS: ecoKnowledge.KnowledgeS(id) {
+			use knowledgeS: ecoKnowledgeRoom.KnowledgeRoomS(id) {
 			}
 			use roomS: ecoRoom.RoomS(id) {
 				bind knowledge to knowledgeS.knowledge
@@ -45,9 +47,11 @@ namespace sma.ecoAgents {
 		}
 
 		// The ecosystem knowledge allows to create a knowledge for each agent
-		part ecoKnowledge: EcoKnowledge {
-			bind environment to environment
-		}
+		part ecoKnowledgeRoom: EcoKnowledgeRoom
+		
+		part ecoKnowledgeTeacher: EcoKnowledgeTeacher
+
+		part ecoKnowledgeStudent: EcoKnowledgeStudent
 
 		// The ecosystem teacher allows to create a teacher content for each teacherAgent
 		part ecoTeacher: EcoTeacher {

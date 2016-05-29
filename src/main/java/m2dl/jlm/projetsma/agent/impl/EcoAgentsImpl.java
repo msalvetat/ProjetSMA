@@ -2,14 +2,18 @@ package m2dl.jlm.projetsma.agent.impl;
 
 import m2dl.jlm.projetsma.agent.ICreateAgent;
 import m2dl.jlm.projetsma.agent.impl.room.EcoRoomImpl;
+import m2dl.jlm.projetsma.agent.impl.room.knowledge.impl.EcoKnowledgeRoomImpl;
 import m2dl.jlm.projetsma.agent.impl.student.EcoStudentImpl;
+import m2dl.jlm.projetsma.agent.impl.student.knowledge.impl.EcoKnowledgeStudentImpl;
 import m2dl.jlm.projetsma.agent.impl.teacher.EcoTeacherImpl;
-import m2dl.jlm.projetsma.agent.knowledge.impl.EcoKnowledgeImpl;
+import m2dl.jlm.projetsma.agent.impl.teacher.knowledge.impl.EcoKnowledgeTeacherImpl;
 import sma.agent.EcoRoom;
 import sma.agent.EcoStudent;
 import sma.agent.EcoTeacher;
 import sma.ecoAgents.EcoAgents;
-import sma.ecoKnowledge.EcoKnowledge;
+import sma.ecoKnowledgeRoom.EcoKnowledgeRoom;
+import sma.ecoKnowledgeStudent.EcoKnowledgeStudent;
+import sma.ecoKnowledgeTeacher.EcoKnowledgeTeacher;
 
 public class EcoAgentsImpl extends EcoAgents {
 
@@ -27,12 +31,12 @@ public class EcoAgentsImpl extends EcoAgents {
                 newStudentAgent(id);
             }
 
-        };
-    }
+            @Override
+            public void createRoomAgent(String id) {
+                newRoomAgent(id);
+            }
 
-    @Override
-    protected EcoKnowledge make_ecoKnowledge() {
-        return new EcoKnowledgeImpl();
+        };
     }
 
     @Override
@@ -48,6 +52,21 @@ public class EcoAgentsImpl extends EcoAgents {
     @Override
     protected EcoRoom make_ecoRoom() {
         return new EcoRoomImpl();
+    }
+
+    @Override
+    protected EcoKnowledgeRoom make_ecoKnowledgeRoom() {
+        return new EcoKnowledgeRoomImpl();
+    }
+
+    @Override
+    protected EcoKnowledgeTeacher make_ecoKnowledgeTeacher() {
+        return new EcoKnowledgeTeacherImpl();
+    }
+
+    @Override
+    protected EcoKnowledgeStudent make_ecoKnowledgeStudent() {
+        return new EcoKnowledgeStudentImpl();
     }
 
 }
