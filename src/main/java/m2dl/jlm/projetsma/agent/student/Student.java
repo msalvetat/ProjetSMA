@@ -16,7 +16,6 @@ public class Student implements ITwoStepsAgent {
     private IKnowledgeStudent        knowledge;
     private String                   id;
     private IMsgBox<AbstractMessage> msgBox;
-    private List<AbstractMessage>    messages;
 
     public Student(String id, IKnowledgeStudent knowledge, IMessagingService messagingService) {
         this.id = id;
@@ -27,7 +26,11 @@ public class Student implements ITwoStepsAgent {
 
     public void perceive() {
 
-        messages = msgBox.getMsgs();
+        for (AbstractMessage m : this.msgBox.getMsgs()) {
+            if (m.getMessageType() == EMessageType.ROOM_PROPOSITION) {
+                this.knowledge.getInformStudentMessages().add((InformStudentMessage) m);
+            }
+        }
     }
 
     public IKnowledgeStudent getKnowledge() {
@@ -36,12 +39,11 @@ public class Student implements ITwoStepsAgent {
 
     public void decideAndAct() {
 
-        for (AbstractMessage m : messages) {
+        for (InformStudentMessage m : this.knowledge.getInformStudentMessages()) {
 
-            if (m.getMessageType() == EMessageType.INFORM_STUDENT_MESSAGE) {
-                InformStudentMessage message = (InformStudentMessage) m;
-//                System.out.println(message.getRoomId() + " " + message.getTeacherId());
-            }
+            this.knowledge.getCourses().add(m.getCourse());
+            // System.out.println(message.getRoomId() + " " +
+            // message.getTeacherId());
         }
     }
 

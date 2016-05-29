@@ -1,30 +1,21 @@
 package m2dl.jlm.projetsma.services.message;
 
+import m2dl.jlm.projetsma.environment.Course;
+
 public class InformStudentMessage extends AbstractMessage {
 
-    private String teacherId;
-    private String roomId;
+    private Course course;
 
-    public InformStudentMessage(String teacherId, String roomId) {
+    public InformStudentMessage(Course course) {
         super();
-        this.teacherId = teacherId;
-        this.roomId = roomId;
-        this.messageType = EMessageType.INFORM_STUDENT_MESSAGE;
+        this.course = course;
+    }
+    
+    public Course getCourse() {
+        return course;
     }
 
-    public String getTeacherId() {
-        return teacherId;
-    }
-
-    public void setTeacher(String teacherId) {
-        this.teacherId = teacherId;
-    }
-
-    public String getRoomId() {
-        return roomId;
-    }
-
-    public void setRoomId(String roomId) {
-        this.roomId = roomId;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 }

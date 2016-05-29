@@ -1,11 +1,10 @@
 package m2dl.jlm.projetsma.agent.teacher;
 
-import java.util.List;
-
 import fr.irit.smac.libs.tooling.messaging.IMsgBox;
 import fr.irit.smac.libs.tooling.scheduling.contrib.twosteps.ITwoStepsAgent;
 import m2dl.jlm.projetsma.Const;
 import m2dl.jlm.projetsma.agent.teacher.knowledge.IKnowledgeTeacher;
+import m2dl.jlm.projetsma.environment.Course;
 import m2dl.jlm.projetsma.services.IMessagingService;
 import m2dl.jlm.projetsma.services.message.AbstractMessage;
 import m2dl.jlm.projetsma.services.message.EMessageType;
@@ -18,7 +17,6 @@ public class Teacher implements ITwoStepsAgent {
     private IKnowledgeTeacher        knowledge;
     private String                   id;
     private IMsgBox<AbstractMessage> msgBox;
-    private List<AbstractMessage>    messages;
 
     public Teacher(String id, IKnowledgeTeacher knowledge, IMessagingService messagingService) {
         this.id = id;
@@ -29,7 +27,11 @@ public class Teacher implements ITwoStepsAgent {
 
     public void perceive() {
 
-        messages = msgBox.getMsgs();
+        for (AbstractMessage m : this.msgBox.getMsgs()) {
+            if (m.getMessageType() == EMessageType.ROOM_PROPOSITION) {
+                this.knowledge.getRoomPropositionMessage().add((RoomPropositionMessage) m);
+            }
+        }
     }
 
     public IKnowledgeTeacher getKnowledge() {
@@ -38,24 +40,16 @@ public class Teacher implements ITwoStepsAgent {
 
     public void decideAndAct() {
 
-        if (!messages.isEmpty()) {
-            for (AbstractMessage m : messages) {
+        for (RoomPropositionMessage m : this.knowledge.getRoomPropositionMessage()) {
 
-                if (m.getMessageType() == EMessageType.ROOM_PROPOSITION) {
-
-                    RoomPropositionMessage message = (RoomPropositionMessage) m;
-                    if (message.getRoom().getKnowledge().isFree()) {
-                        String roomId = message.getRoomId();
-                        message.getRoom().getKnowledge().setFree(false);
-                        this.knowledge.setLookingForRoom(false);
-                        System.out.println(id + " " + roomId);
-                        this.msgBox.sendToGroup(new InformStudentMessage(id, roomId), Const.STUDENT_GROUP);
-                        break;
-                    }
-                }
-
+            if (m.getRoom().getKnowledge().isFree()) {
+                String roomId = m.getRoomId();
+                m.getRoom().getKnowledge().setFree(false);
+                this.knowledge.setLookingForRoom(false);
+                System.out.println(id + " " + roomId);
+                this.msgBox.sendToGroup(new InformStudentMessage(new Course(id, roomId)), Const.STUDENT_GROUP);
+                break;
             }
-
         }
 
         if (this.knowledge.isLookingForRooms()) {

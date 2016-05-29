@@ -9,6 +9,7 @@ import m2dl.jlm.projetsma.agent.room.knowledge.IKnowledgeRoom;
 import m2dl.jlm.projetsma.services.IMessagingService;
 import m2dl.jlm.projetsma.services.message.AbstractMessage;
 import m2dl.jlm.projetsma.services.message.EMessageType;
+import m2dl.jlm.projetsma.services.message.InformStudentMessage;
 import m2dl.jlm.projetsma.services.message.RoomPropositionMessage;
 import m2dl.jlm.projetsma.services.message.RoomSearchMessage;
 
@@ -17,8 +18,6 @@ public class Room implements ITwoStepsAgent {
     private IKnowledgeRoom           knowledge;
     private String                   id;
     private IMsgBox<AbstractMessage> msgBox;
-
-    private List<AbstractMessage> messages;
 
     public Room(String id, IKnowledgeRoom knowledge, IMessagingService messagingService) {
         this.id = id;
@@ -30,19 +29,18 @@ public class Room implements ITwoStepsAgent {
     @Override
     public void perceive() {
 
-        messages = msgBox.getMsgs();
+        for (AbstractMessage m : this.msgBox.getMsgs()) {
+            if (m.getMessageType() == EMessageType.ROOM_SEARCH) {
+                this.knowledge.getRoomSearchMessages().add((RoomSearchMessage) m);
+            }
+        }
     }
 
     @Override
     public void decideAndAct() {
 
-        if (!messages.isEmpty()) {
-            for (AbstractMessage m : messages) {
-
-                if (m.getMessageType() == EMessageType.ROOM_SEARCH) {
-                    this.msgBox.send(new RoomPropositionMessage(id, this), ((RoomSearchMessage) m).getTeacherId());
-                }
-            }
+        for (RoomSearchMessage m : this.knowledge.getRoomSearchMessages()) {
+            this.msgBox.send(new RoomPropositionMessage(id, this), ((RoomSearchMessage) m).getTeacherId());
         }
     }
 
